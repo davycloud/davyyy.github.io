@@ -116,11 +116,42 @@
 <h2 id="u5B89_u88C5Hexo"><a href="#u5B89_u88C5Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><p>root用户安装hexo命令行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># npm install -g hexo-cli</span><br></pre></td></tr></table></figure></p>
 <p>切换到普通用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~&#10;$ hexo init blog</span><br></pre></td></tr></table></figure></p>
 <p>会自动生成一个 blog 目录，进入该目录继续执行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cd blog&#10;$ npm install</span><br></pre></td></tr></table></figure></p>
-<h2 id="Hexo_u57FA_u672C_u914D_u7F6E"><a href="#Hexo_u57FA_u672C_u914D_u7F6E" class="headerlink" title="Hexo基本配置"></a>Hexo基本配置</h2><p>编辑hexo的配置文件，位于blog目录下的<code>_config.yml</code>文件，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># Site&#10;title: Davys Blog    # &#20027;&#26631;&#39064;&#10;subtitle: &#29983;&#21629;&#22312;&#20110;&#25240;&#33150;    # &#21103;&#26631;&#39064;&#10;description:&#10;author: Davyyy    # &#20316;&#32773;&#21517;&#10;language: zh-CN    # &#31616;&#20307;&#20013;&#25991;&#10;timezone: Asia/Shanghai    # &#26102;&#21306;</span><br></pre></td></tr></table></figure></p>
-<p>测试一下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server&#10;INFO  Hexo is running at http://0.0.0.0:4000/. Press Ctrl+C to stop.</span><br></pre></td></tr></table></figure></p>
+<h2 id="Hexo_u57FA_u672C_u914D_u7F6E"><a href="#Hexo_u57FA_u672C_u914D_u7F6E" class="headerlink" title="Hexo基本配置"></a>Hexo基本配置</h2><blockquote>
+<p>注意： 以下<code>hexo</code>命令都是在blog目录内执行</p>
+</blockquote>
+<p>编辑hexo的配置文件，位于blog目录下的<code>_config.yml</code>文件，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># Site&#10;title: Davys Blog    # &#20027;&#26631;&#39064;&#10;subtitle: &#29983;&#21629;&#22312;&#20110;&#25240;&#33150;    # &#21103;&#26631;&#39064;&#10;description:&#10;author: Davyyy    # &#20316;&#32773;&#21517;&#10;language: zh-CN    # &#31616;&#20307;&#20013;&#25991;&#10;timezone: Asia/Shanghai    # &#26102;&#21306;</span><br></pre></td></tr></table></figure></p>
+<p>新建一篇博客<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new my-first-blog</span><br></pre></td></tr></table></figure></p>
+<p>生成的.md文件在<code>blog/source/_posts</code>中，随便写点内容。</p>
+<p>测试一下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate&#10;$ hexo server&#10;INFO  Hexo is running at http://0.0.0.0:4000/. Press Ctrl+C to stop.</span><br></pre></td></tr></table></figure></p>
 <p>浏览器访问<a href="http://192.168.1.111:4000/" target="_blank" rel="external">http://192.168.1.111:4000/</a> （虚机的IP）</p>
 <h2 id="u9759_u6001_u9875_u9762_u90E8_u7F72_u5230GitHub"><a href="#u9759_u6001_u9875_u9762_u90E8_u7F72_u5230GitHub" class="headerlink" title="静态页面部署到GitHub"></a>静态页面部署到GitHub</h2><p>在GitHub上新建名为 <code>davyyy.github.io</code> 的repository，其中davyyy是我在GitHub上的用户名。</p>
-<p>编辑hexo的配置文件，位于blog目录下的<code>_config.yml</code>，设置Deployment部分配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim _config.yml&#10;&#10;# Deployment&#10;## Docs: http://hexo.io/docs/deployment.html&#10;deploy:&#10;  type: git&#10;  repo: git@github.com:davyyy/davyyy.github.io.git&#10;  branch: master</span><br></pre></td></tr></table></figure></p>
+<p>编辑<code>_config.yml</code>，设置<code>Deployment</code>部分配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim _config.yml&#10;&#10;# Deployment&#10;## Docs: http://hexo.io/docs/deployment.html&#10;deploy:&#10;  type: git&#10;  repo: git@github.com:davyyy/davyyy.github.io.git&#10;  branch: master</span><br></pre></td></tr></table></figure></p>
+<p>运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>如果前面生成SSH key的时候设置了passphrase，这里会提示输入</p>
+</blockquote>
+<p>一切顺利的话，过一会儿访问 <a href="http://davyyy.github.io/">http://davyyy.github.io/</a> 就能看到效果了</p>
+<p>如果页面没有更新，可以去GitHub仓库 <a href="https://github.com/davyyy/davyyy.github.io" target="_blank" rel="external">https://github.com/davyyy/davyyy.github.io</a> 看看页面是否已经上传。</p>
+<h2 id="u535A_u5BA2_u6E90_u6587_u4EF6_u6258_u7BA1_u5230GitHub"><a href="#u535A_u5BA2_u6E90_u6587_u4EF6_u6258_u7BA1_u5230GitHub" class="headerlink" title="博客源文件托管到GitHub"></a>博客源文件托管到GitHub</h2><p>在GitHub上新建一个repository，名称和本地目录保持一致，也叫blog。</p>
+<p>创建本地仓库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~/blog&#10;$ git init</span><br></pre></td></tr></table></figure>
+<p>编辑.gitignore<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cat .gitignore &#10;node_modules/&#10;public/&#10;.deploy_git/&#10;db.json</span><br></pre></td></tr></table></figure></p>
+<p>添加远程仓库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add origin git@github.com:davyyy/blog.git</span><br></pre></td></tr></table></figure></p>
+<p>将所有文件都保存到本地仓库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git add .&#10;$ git commit -m &#34;add all files&#34;</span><br></pre></td></tr></table></figure></p>
+<p>推送到远程仓库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin master</span><br></pre></td></tr></table></figure></p>
+<h2 id="u914D_u7F6EHexo_u7684Themes"><a href="#u914D_u7F6EHexo_u7684Themes" class="headerlink" title="配置Hexo的Themes"></a>配置Hexo的Themes</h2><p><a href="https://hexo.io/themes/" target="_blank" rel="external">https://hexo.io/themes/</a> 上有很多主题推荐，可以预览，选择一个自己喜欢的。<br>试了一下 <a href="http://notes.iissnan.com/" target="_blank" rel="external">NexT</a> 和 <a href="http://wuchong.me/jacman/" target="_blank" rel="external">Jacman</a>，最(zan)终(shi)选择Jacman.</p>
+<p>这里要 <strong>注意</strong> 一下主题的安装方式</p>
+<p>文档中写的是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/wuchong/jacman.git themes/jacman</span><br></pre></td></tr></table></figure>
+<p>因为blog目录本身已经是一个git仓库了，这里又clone了一个过来，会造成blog自身库的更新问题.<br>如果把jacman下的<code>.git</code>目录删掉，blog更新没问题了，但是以后主题版本的更新会比较麻烦。</p>
+<p>搜索了一番，使用 <code>git submodule</code> 命令添加即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git submodule add https://github.com/wuchong/jacman.git themes/jacman</span><br></pre></td></tr></table></figure></p>
+<p>按照 <a href="http://wuchong.me/jacman/2014/11/20/how-to-use-jacman/" target="_blank" rel="external">文档</a> 配置主题，因为主题文件夹在本地也是git库，<br>所有文件有改动后，也要把改动commit一下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cd themes/jacman/&#10;$ git add .&#10;$ git commit -m &#34;change config, change logo,author image&#34;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里主题的改动就不用push到GitHub上了</p>
+</blockquote>
+<h2 id="Sublime_Text_u53CASFTP_u63D2_u4EF6_u7684_u5B89_u88C5"><a href="#Sublime_Text_u53CASFTP_u63D2_u4EF6_u7684_u5B89_u88C5" class="headerlink" title="Sublime Text及SFTP插件的安装"></a>Sublime Text及SFTP插件的安装</h2><p>待补充</p>
+<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><p>添加评论系统</p>
 
         
         
