@@ -11,22 +11,34 @@
     
 
     
-    <meta name="description" content="[toc]
-环境概况本机安装Windows10，其中使用VirtualBox创建CentOS7的虚拟机。
-安装Hexo在CentOS的虚机上操作：">
+    <meta name="description" content="零零碎碎花了几天时间，终于把博客搭建起来了，下面详细记录下过程。
+环境概况本机安装Windows10，并安装了VirtualBox创建了一台CentOS7的虚拟机。Hexo（包括themes）和git等软件在虚拟机上安装，因为：
+
+Linux上安装开源软件方便
+虚拟机可以快照备份，避免重复折腾
+
+GitHub作为博客网站的托管，同时作为博客Markdown源文件的远程仓库。Markdown文件的编">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo+GitHub搭建博客">
 <meta property="og:url" content="http://davyyy.github.io/2016/01/14/how-to-setup-this-blog/index.html">
 <meta property="og:site_name" content="Davy's Blog">
-<meta property="og:description" content="[toc]
-环境概况本机安装Windows10，其中使用VirtualBox创建CentOS7的虚拟机。
-安装Hexo在CentOS的虚机上操作：">
-<meta property="og:updated_time" content="2016-01-17T09:41:26.000Z">
+<meta property="og:description" content="零零碎碎花了几天时间，终于把博客搭建起来了，下面详细记录下过程。
+环境概况本机安装Windows10，并安装了VirtualBox创建了一台CentOS7的虚拟机。Hexo（包括themes）和git等软件在虚拟机上安装，因为：
+
+Linux上安装开源软件方便
+虚拟机可以快照备份，避免重复折腾
+
+GitHub作为博客网站的托管，同时作为博客Markdown源文件的远程仓库。Markdown文件的编">
+<meta property="og:updated_time" content="2016-01-18T13:23:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo+GitHub搭建博客">
-<meta name="twitter:description" content="[toc]
-环境概况本机安装Windows10，其中使用VirtualBox创建CentOS7的虚拟机。
-安装Hexo在CentOS的虚机上操作：">
+<meta name="twitter:description" content="零零碎碎花了几天时间，终于把博客搭建起来了，下面详细记录下过程。
+环境概况本机安装Windows10，并安装了VirtualBox创建了一台CentOS7的虚拟机。Hexo（包括themes）和git等软件在虚拟机上安装，因为：
+
+Linux上安装开源软件方便
+虚拟机可以快照备份，避免重复折腾
+
+GitHub作为博客网站的托管，同时作为博客Markdown源文件的远程仓库。Markdown文件的编">
 
     
     <link rel="alternative" href="/atom.xml" title="Davy&#39;s Blog" type="application/atom+xml">
@@ -102,13 +114,37 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u73AF_u5883_u6982_u51B5"><span class="toc-number">1.</span> <span class="toc-text">环境概况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5B89_u88C5Hexo"><span class="toc-number">2.</span> <span class="toc-text">安装Hexo</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u73AF_u5883_u6982_u51B5"><span class="toc-number">1.</span> <span class="toc-text">环境概况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u524D_u671F_u5DE5_u4F5C"><span class="toc-number">2.</span> <span class="toc-text">前期工作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u5B89_u88C5VirtualBox_u548CCentOS_u865A_u62DF_u673A"><span class="toc-number">2.1.</span> <span class="toc-text">安装VirtualBox和CentOS虚拟机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CentOS_u5B89_u88C5_u5FC5_u8981_u8F6F_u4EF6"><span class="toc-number">2.2.</span> <span class="toc-text">CentOS安装必要软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GitHub_u6CE8_u518C"><span class="toc-number">2.3.</span> <span class="toc-text">GitHub注册</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git_u5FC5_u8981_u914D_u7F6E"><span class="toc-number">2.4.</span> <span class="toc-text">git必要配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u751F_u6210SSH_key_u5E76_u6DFB_u52A0_u5230GitHub"><span class="toc-number">2.5.</span> <span class="toc-text">生成SSH key并添加到GitHub</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5B89_u88C5Hexo"><span class="toc-number">3.</span> <span class="toc-text">安装Hexo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hexo_u57FA_u672C_u914D_u7F6E"><span class="toc-number">4.</span> <span class="toc-text">Hexo基本配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u9759_u6001_u9875_u9762_u90E8_u7F72_u5230GitHub"><span class="toc-number">5.</span> <span class="toc-text">静态页面部署到GitHub</span></a></li></ol>
 		
 		</div>
 		
-		<p>[toc]</p>
-<h2 id="u73AF_u5883_u6982_u51B5"><a href="#u73AF_u5883_u6982_u51B5" class="headerlink" title="环境概况"></a>环境概况</h2><p>本机安装Windows10，其中使用VirtualBox创建CentOS7的虚拟机。</p>
-<h2 id="u5B89_u88C5Hexo"><a href="#u5B89_u88C5Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><p>在CentOS的虚机上操作：</p>
+		<p>零零碎碎花了几天时间，终于把博客搭建起来了，下面详细记录下过程。</p>
+<h2 id="u73AF_u5883_u6982_u51B5"><a href="#u73AF_u5883_u6982_u51B5" class="headerlink" title="环境概况"></a>环境概况</h2><p>本机安装Windows10，并安装了VirtualBox创建了一台CentOS7的虚拟机。<br>Hexo（包括themes）和git等软件在虚拟机上安装，因为：</p>
+<ul>
+<li>Linux上安装开源软件方便</li>
+<li>虚拟机可以快照备份，避免重复折腾</li>
+</ul>
+<p>GitHub作为博客网站的托管，同时作为博客Markdown源文件的远程仓库。<br>Markdown文件的编辑在Windows上完成，使用SublimeText编辑器，并使用SFTP插件同步到Linux虚机上。</p>
+<h2 id="u524D_u671F_u5DE5_u4F5C"><a href="#u524D_u671F_u5DE5_u4F5C" class="headerlink" title="前期工作"></a>前期工作</h2><h3 id="u5B89_u88C5VirtualBox_u548CCentOS_u865A_u62DF_u673A"><a href="#u5B89_u88C5VirtualBox_u548CCentOS_u865A_u62DF_u673A" class="headerlink" title="安装VirtualBox和CentOS虚拟机"></a>安装VirtualBox和CentOS虚拟机</h3><p>安装过程略。</p>
+<p>注意，虚机网卡要选择桥接网络，这样可以和本机一样DHCP从路由器获取IP地址并上网，同时本机也可以SecureCRT连接<br>到虚机，默认NAT模式的话本机无法直接ssh到虚机的10.0.2.15地址。</p>
+<h3 id="CentOS_u5B89_u88C5_u5FC5_u8981_u8F6F_u4EF6"><a href="#CentOS_u5B89_u88C5_u5FC5_u8981_u8F6F_u4EF6" class="headerlink" title="CentOS安装必要软件"></a>CentOS安装必要软件</h3><p>安装epel源<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum install epel-release.noarch</span><br></pre></td></tr></table></figure></p>
+<p>安装git<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum install git</span><br></pre></td></tr></table></figure></p>
+<p>安装npm<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum install npm</span><br></pre></td></tr></table></figure></p>
+<h3 id="GitHub_u6CE8_u518C"><a href="#GitHub_u6CE8_u518C" class="headerlink" title="GitHub注册"></a>GitHub注册</h3><p>略</p>
+<h3 id="git_u5FC5_u8981_u914D_u7F6E"><a href="#git_u5FC5_u8981_u914D_u7F6E" class="headerlink" title="git必要配置"></a>git必要配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># git config --global user.name davyyy&#10;# git config --global user.email dawei.si@qq.com</span><br></pre></td></tr></table></figure>
+<h3 id="u751F_u6210SSH_key_u5E76_u6DFB_u52A0_u5230GitHub"><a href="#u751F_u6210SSH_key_u5E76_u6DFB_u52A0_u5230GitHub" class="headerlink" title="生成SSH key并添加到GitHub"></a>生成SSH key并添加到GitHub</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -b 4096 -C &#34;dawei.si@qq.com&#34;</span><br></pre></td></tr></table></figure>
+<p>生成到key在 <code>/home/davy/.ssh</code> 目录中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~/.ssh&#10;$ ls&#10;id_rsa  id_rsa.pub  known_hosts&#10;$ cat id_rsa.pub&#10;ssh-rsa AAAAB3NzaC1yc2EAAAADA......</span><br></pre></td></tr></table></figure>
+<p>登陆GitHub网站，进入 <code>Settings</code> 页面，选择 <code>SSH keys</code> ，点击<code>Add  SSH key</code>，<br>拷贝 <code>id_ras.pub</code> 中的内容，添加到key中.</p>
+<p>测试连接GitHub<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com&#10;The authenticity of host &#39;github.com (192.30.252.128)&#39; can&#39;t be established.&#10;RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.&#10;Are you sure you want to continue connecting (yes/no)? yes&#10;Warning: Permanently added &#39;github.com,192.30.252.128&#39; (RSA) to the list of known hosts.&#10;Enter passphrase for key &#39;/home/davy/.ssh/id_rsa&#39;: &#10;Hi davyyy! You&#39;ve successfully authenticated, but GitHub does not provide shell access.</span><br></pre></td></tr></table></figure></p>
+<h2 id="u5B89_u88C5Hexo"><a href="#u5B89_u88C5Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><p>root用户安装hexo命令行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># npm install -g hexo-cli</span><br></pre></td></tr></table></figure></p>
+<p>切换到普通用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~&#10;$ hexo init blog</span><br></pre></td></tr></table></figure></p>
+<p>会自动生成一个 blog 目录，进入该目录继续执行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cd blog&#10;$ npm install</span><br></pre></td></tr></table></figure></p>
+<h2 id="Hexo_u57FA_u672C_u914D_u7F6E"><a href="#Hexo_u57FA_u672C_u914D_u7F6E" class="headerlink" title="Hexo基本配置"></a>Hexo基本配置</h2><p>编辑hexo的配置文件，位于blog目录下的<code>_config.yml</code>文件，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># Site&#10;title: Davys Blog    # &#20027;&#26631;&#39064;&#10;subtitle: &#29983;&#21629;&#22312;&#20110;&#25240;&#33150;    # &#21103;&#26631;&#39064;&#10;description:&#10;author: Davyyy    # &#20316;&#32773;&#21517;&#10;language: zh-CN    # &#31616;&#20307;&#20013;&#25991;&#10;timezone: Asia/Shanghai    # &#26102;&#21306;</span><br></pre></td></tr></table></figure></p>
+<p>测试一下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server&#10;INFO  Hexo is running at http://0.0.0.0:4000/. Press Ctrl+C to stop.</span><br></pre></td></tr></table></figure></p>
+<p>浏览器访问<a href="http://192.168.1.111:4000/" target="_blank" rel="external">http://192.168.1.111:4000/</a> （虚机的IP）</p>
+<h2 id="u9759_u6001_u9875_u9762_u90E8_u7F72_u5230GitHub"><a href="#u9759_u6001_u9875_u9762_u90E8_u7F72_u5230GitHub" class="headerlink" title="静态页面部署到GitHub"></a>静态页面部署到GitHub</h2><p>在GitHub上新建名为 <code>davyyy.github.io</code> 的repository，其中davyyy是我在GitHub上的用户名。</p>
+<p>编辑hexo的配置文件，位于blog目录下的<code>_config.yml</code>，设置Deployment部分配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim _config.yml&#10;&#10;# Deployment&#10;## Docs: http://hexo.io/docs/deployment.html&#10;deploy:&#10;  type: git&#10;  repo: git@github.com:davyyy/davyyy.github.io.git&#10;  branch: master</span><br></pre></td></tr></table></figure></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -153,7 +189,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u73AF_u5883_u6982_u51B5"><span class="toc-number">1.</span> <span class="toc-text">环境概况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5B89_u88C5Hexo"><span class="toc-number">2.</span> <span class="toc-text">安装Hexo</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u73AF_u5883_u6982_u51B5"><span class="toc-number">1.</span> <span class="toc-text">环境概况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u524D_u671F_u5DE5_u4F5C"><span class="toc-number">2.</span> <span class="toc-text">前期工作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u5B89_u88C5VirtualBox_u548CCentOS_u865A_u62DF_u673A"><span class="toc-number">2.1.</span> <span class="toc-text">安装VirtualBox和CentOS虚拟机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CentOS_u5B89_u88C5_u5FC5_u8981_u8F6F_u4EF6"><span class="toc-number">2.2.</span> <span class="toc-text">CentOS安装必要软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GitHub_u6CE8_u518C"><span class="toc-number">2.3.</span> <span class="toc-text">GitHub注册</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git_u5FC5_u8981_u914D_u7F6E"><span class="toc-number">2.4.</span> <span class="toc-text">git必要配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u751F_u6210SSH_key_u5E76_u6DFB_u52A0_u5230GitHub"><span class="toc-number">2.5.</span> <span class="toc-text">生成SSH key并添加到GitHub</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5B89_u88C5Hexo"><span class="toc-number">3.</span> <span class="toc-text">安装Hexo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hexo_u57FA_u672C_u914D_u7F6E"><span class="toc-number">4.</span> <span class="toc-text">Hexo基本配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u9759_u6001_u9875_u9762_u90E8_u7F72_u5230GitHub"><span class="toc-number">5.</span> <span class="toc-text">静态页面部署到GitHub</span></a></li></ol>
  
   </div>
 
