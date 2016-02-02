@@ -152,8 +152,13 @@
 <h3 id="u865A_u673A_u521B_u5EFA_u5931_u8D25"><a href="#u865A_u673A_u521B_u5EFA_u5931_u8D25" class="headerlink" title="虚机创建失败"></a>虚机创建失败</h3><p>虚机创建时报错,”No valid host was found”, 开始以为是虚机的内存分的不够,更改了虚机配置后仍然报错.<br>查看计算节点的nova-compute日志, “libvirtError: invalid argument: could not find capabilities for domain type=kvm”,<br>感觉VirtualBox的虚机不支持kvm,按照网上说法,应该是从5.0版本已经开始支持kvm了,而且虚机的设置页面,系统硬件加速显示是支持KVM半虚拟化,但是就是不行. 最终只能使用qemu全虚拟化,更改计算节点的<code>nova.conf</code>:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[libvirt]</span><br><span class="line">virt_<span class="built_in">type</span> = qemu</span><br></pre></td></tr></table></figure>
 <p>重启服务后生效,虚机创建成功.</p>
-<h3 id="u865A_u673A_u7F51_u7EDC_u4E0D_u901A_28_u8FD8_u6CA1_u89E3_u51B3_29"><a href="#u865A_u673A_u7F51_u7EDC_u4E0D_u901A_28_u8FD8_u6CA1_u89E3_u51B3_29" class="headerlink" title="虚机网络不通(还没解决)"></a>虚机网络不通(还没解决)</h3><p>虚机启动后无法获取地址,手动配置地址后,和所在的计算节点可以互通,但是和管理节点不通.<br>在管理节点抓包,可以抓取到虚机发送的报文.</p>
+<h3 id="u865A_u673A_u7F51_u7EDC_u4E0D_u901A"><a href="#u865A_u673A_u7F51_u7EDC_u4E0D_u901A" class="headerlink" title="虚机网络不通"></a>虚机网络不通</h3><p>虚机启动后无法获取地址,手动配置地址后,和所在的计算节点可以互通,但是和管理节点不通.<br>在管理节点抓包,可以抓取到虚机发送的报文.</p>
 <p>同时管理节点可以ping通dhcp-port,但是在计算节点上ping不通dhcp-port的地址.<br>现在不能确定是不是VirtualBox的虚拟网络问题,还是这个地址段的问题</p>
+<p>google了一番, 参考<a href="http://www.innervoice.in/blogs/2015/06/14/virtualbox-networking-settings-for-openstack/" target="_blank" rel="external">这个博客</a> 终于解决了.<br>主要是这里</p>
+<blockquote>
+<p>Tip: it is important to enable Promiscuous mode on eth1, the data traffic interfaces on both compute and controller node. Without this setting packets will not reach from OpenStack tenant VMs (that will be started inside the compute node), to the OpenStack controller.</p>
+</blockquote>
+<p>把对应的网卡设置,选择高级, 把 <code>混杂模式</code> 原来是”拒绝”改成”全部允许”</p>
 
         
         
