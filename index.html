@@ -1,0 +1,665 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Davy&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Davyyy">
+    
+
+    
+    <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Davy's Blog">
+<meta property="og:url" content="http://davyyy.github.io/index.html">
+<meta property="og:site_name" content="Davy's Blog">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Davy's Blog">
+<meta name="twitter:description">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Davy&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Davy&#39;s Blog" title="Davy&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Davy&#39;s Blog">Davy&#39;s Blog</a></h1>
+				<h2 class="blog-motto">生命在于折腾</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:davyyy.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main">
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/02/01/virtualbox-install-openstack/" title="VirtualBox安装OpenStack" itemprop="url">VirtualBox安装OpenStack</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Davyyy" target="_blank" itemprop="author">Davyyy</a>
+		
+  <p class="article-time">
+    <time datetime="2016-02-01T11:47:34.000Z" itemprop="datePublished"> 发表于 2016-02-01</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>记录使用VirtualBox安装OpenStack的过程.</p>
+<h2 id="u73AF_u5883_u6982_u8FF0"><a href="#u73AF_u5883_u6982_u8FF0" class="headerlink" title="环境概述"></a>环境概述</h2><ul>
+<li>VirtualBox5.0</li>
+<li>CentOS7操作系统镜像</li>
+</ul>
+<h2 id="VirtualBox_u7F51_u7EDC_u914D_u7F6E"><a href="#VirtualBox_u7F51_u7EDC_u914D_u7F6E" class="headerlink" title="VirtualBox网络配置"></a>VirtualBox网络配置</h2><p>菜单栏 <code>管理</code>-&gt;<code>全局设定</code>-&gt;<code>网络</code>,选择 <code>仅主机(Host-Only)网络</code>, 添加两个网络,网络分别设置为:</p>
+<ul>
+<li>网络#2: IPv4地址:172.16.1.1, 掩码:255.255.255.0</li>
+<li>网络#3: IPv4地址:10.0.0.1, 掩码:255.255.255.0</li>
+</ul>
+<p>两个网络都没有启用DHCP服务器.</p>
+<h2 id="u521B_u5EFA_u865A_u62DF_u673A"><a href="#u521B_u5EFA_u865A_u62DF_u673A" class="headerlink" title="创建虚拟机"></a>创建虚拟机</h2><p>为了避免重复操作,先创建一台虚拟机,安装公共的软件后,再制作快照复制.<br>总共添加3块虚拟网卡, 第一块是选择桥接网络,另外两块分别选择上面创建的网络#2和#3</p>
+<h3 id="u5B89_u88C5CentOS7_u7CFB_u7EDF"><a href="#u5B89_u88C5CentOS7_u7CFB_u7EDF" class="headerlink" title="安装CentOS7系统"></a>安装CentOS7系统</h3><p>语言选择English,软件选择最小安装.</p>
+<p>安装完毕后,停以下服务:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># systemctl disable firewalld.service </span></span><br><span class="line"><span class="comment"># systemctl disable NetworkManager</span></span><br></pre></td></tr></table></figure>
+<h3 id="u5B89_u88C5_u5FC5_u8981_u7684_u5305"><a href="#u5B89_u88C5_u5FC5_u8981_u7684_u5305" class="headerlink" title="安装必要的包"></a>安装必要的包</h3><p>最小安装缺少的常有命令:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install vim</span></span><br><span class="line"><span class="comment"># yum install net-tools</span></span><br><span class="line"><span class="comment"># yum install bash-completion</span></span><br></pre></td></tr></table></figure>
+<p>其中 <code>net-tools</code> 是为了使用 <code>ifconfig</code> 命令.<br><code>bash-completion</code>是增强自动补全功能,可以补全子命令</p>
+<h3 id="u914D_u7F6E_u7F51_u7EDC"><a href="#u914D_u7F6E_u7F51_u7EDC" class="headerlink" title="配置网络"></a>配置网络</h3><p>系统的3块网卡名分别是: enp0s3, enp0s8, enp0s9</p>
+<p>桥接网络,dhcp获取的地址是192.168.1.112<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cat ifcfg-enp0s3 </span></span><br><span class="line">TYPE=Ethernet</span><br><span class="line">BOOTPROTO=dhcp</span><br><span class="line">DEFROUTE=yes</span><br><span class="line">PEERDNS=yes</span><br><span class="line">PEERROUTES=yes</span><br><span class="line">IPV4_FAILURE_FATAL=no</span><br><span class="line">NAME=enp0s3</span><br><span class="line">UUID=<span class="number">3</span>b6d6<span class="built_in">cd</span>2-<span class="number">8309</span>-<span class="number">438</span>b-<span class="number">98</span>a6<span class="operator">-f</span>03025c38c55</span><br><span class="line">DEVICE=enp0s3</span><br><span class="line">ONBOOT=yes</span><br></pre></td></tr></table></figure></p>
+<p>用于管理网络<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cat ifcfg-enp0s8</span></span><br><span class="line">TYPE=Ethernet</span><br><span class="line">BOOTPROTO=dhcp</span><br><span class="line">DEFROUTE=yes</span><br><span class="line">PEERDNS=yes</span><br><span class="line">PEERROUTES=yes</span><br><span class="line">IPV4_FAILURE_FATAL=no</span><br><span class="line">NAME=enp0s8</span><br><span class="line">DEVICE=enp0s8</span><br><span class="line">ONBOOT=yes</span><br><span class="line">IPADDR=<span class="number">10.0</span>.<span class="number">0.11</span></span><br><span class="line">PREFIX=<span class="number">24</span></span><br></pre></td></tr></table></figure></p>
+<p>用于虚机网络<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cat ifcfg-enp0s9</span></span><br><span class="line">TYPE=Ethernet</span><br><span class="line">BOOTPROTO=dhcp</span><br><span class="line">DEFROUTE=yes</span><br><span class="line">PEERDNS=yes</span><br><span class="line">PEERROUTES=yes</span><br><span class="line">IPV4_FAILURE_FATAL=no</span><br><span class="line">NAME=enp0s9</span><br><span class="line">DEVICE=enp0s9</span><br><span class="line">ONBOOT=yes</span><br><span class="line">IPADDR=<span class="number">172.16</span>.<span class="number">1.100</span></span><br><span class="line">PREFIX=<span class="number">24</span></span><br></pre></td></tr></table></figure></p>
+<p>配置hostname为controller,并配置<code>/etc/hosts</code>, 添加如下配置:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># controller</span></span><br><span class="line"><span class="number">10.0</span>.<span class="number">0.11</span> controller</span><br><span class="line"><span class="comment"># compute</span></span><br><span class="line"><span class="number">10.0</span>.<span class="number">0.31</span> compute-<span class="number">01</span></span><br></pre></td></tr></table></figure>
+<h2 id="OpenStack_u5B89_u88C5"><a href="#OpenStack_u5B89_u88C5" class="headerlink" title="OpenStack安装"></a>OpenStack安装</h2><p>后面的操作主要就是参照 <a href="http://docs.openstack.org/liberty/install-guide-rdo/" target="_blank" rel="external">官方手册</a> 一步步的执行,不再列出完整的过程.</p>
+<p>其中配置文件的编辑部分比较繁琐,参考 <a href="http://www.chenshake.com/centos-7-x-openstack-liberty-linux-bridge/" target="_blank" rel="external">陈沙克博客</a>,使用<br><code>openstack-config</code>命令完成</p>
+<h3 id="u5B89_u88C5_u516C_u5171_u5305"><a href="#u5B89_u88C5_u516C_u5171_u5305" class="headerlink" title="安装公共包"></a>安装公共包</h3><p>安装EPEL源<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm</span></span><br></pre></td></tr></table></figure></p>
+<p>安装OpenStack源<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install centos-release-openstack-liberty</span></span><br></pre></td></tr></table></figure></p>
+<p>安装openstack客户端<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum install python-openstackclient</span><br></pre></td></tr></table></figure></p>
+<p>安装selinux工具<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum install openstack-selinux</span><br></pre></td></tr></table></figure></p>
+<p>更新系统<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum update</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>执行到此可以将虚机关机,并制作快照</p>
+</blockquote>
+<h3 id="u590D_u5236_u865A_u62DF_u673A"><a href="#u590D_u5236_u865A_u62DF_u673A" class="headerlink" title="复制虚拟机"></a>复制虚拟机</h3><p>复制虚拟机controller, 新的虚拟机用作计算节点, 名为compute01</p>
+<h3 id="u7EE7_u7EED_u5B89_u88C5Controller_u8282_u70B9"><a href="#u7EE7_u7EED_u5B89_u88C5Controller_u8282_u70B9" class="headerlink" title="继续安装Controller节点"></a>继续安装Controller节点</h3><p>参照文档以下的章节依次安装:</p>
+<ul>
+<li><a href="http://docs.openstack.org/liberty/install-guide-rdo/environment-sql-database.html" target="_blank" rel="external">安装数据库</a></li>
+<li><a href="http://docs.openstack.org/liberty/install-guide-rdo/environment-messaging.html" target="_blank" rel="external">安装消息队列</a></li>
+<li>Add the Identity service,即<a href="http://docs.openstack.org/liberty/install-guide-rdo/keystone.html" target="_blank" rel="external">keystone</a></li>
+<li>Add the Image service,即<a href="http://docs.openstack.org/liberty/install-guide-rdo/glance.html" target="_blank" rel="external">glance</a></li>
+<li>Add the Compute service, controller部分, <a href="http://docs.openstack.org/liberty/install-guide-rdo/nova-controller-install.html" target="_blank" rel="external">nova</a></li>
+<li>Add the Networking service,即<a href="http://docs.openstack.org/liberty/install-guide-rdo/neutron.html" target="_blank" rel="external">neutron</a></li>
+<li>Add the dashboard,即<a href="http://docs.openstack.org/liberty/install-guide-rdo/horizon.html" target="_blank" rel="external">horizon</a></li>
+</ul>
+<blockquote>
+<p>其中网络部分选择第一种,<a href="http://docs.openstack.org/liberty/install-guide-rdo/neutron-controller-install-option1.html" target="_blank" rel="external">Provider networks</a></p>
+<p>网络安装部分指定的网卡是 enp0s9</p>
+</blockquote>
+<h3 id="u5B89_u88C5_u8BA1_u7B97_u8282_u70B9"><a href="#u5B89_u88C5_u8BA1_u7B97_u8282_u70B9" class="headerlink" title="安装计算节点"></a>安装计算节点</h3><p>计算节点虚机启动前可以更改一下配置,多分配一点内存和CPU.</p>
+<p>安装包之前要先修改网络和Hostname配置.</p>
+<p>计算节点的安装比较简单,主要就是nova和neutron的部分,参照文档执行即可.</p>
+<h2 id="OpenStack_u8C03_u8BD5"><a href="#OpenStack_u8C03_u8BD5" class="headerlink" title="OpenStack调试"></a>OpenStack调试</h2><h3 id="u521B_u5EFA_u7F51_u7EDC"><a href="#u521B_u5EFA_u7F51_u7EDC" class="headerlink" title="创建网络"></a>创建网络</h3><p>供应商网络类型选择Flat, 物理网络是public,网络地址是172.16.1.0/24</p>
+<h3 id="u521B_u5EFA_u865A_u673A"><a href="#u521B_u5EFA_u865A_u673A" class="headerlink" title="创建虚机"></a>创建虚机</h3><p>虚机中起虚机,速度感人,只能用cirros尝鲜.</p>
+<h2 id="u9047_u5230_u7684_u95EE_u9898"><a href="#u9047_u5230_u7684_u95EE_u9898" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><h3 id="u955C_u50CF_u4E0A_u4F20_u5931_u8D25"><a href="#u955C_u50CF_u4E0A_u4F20_u5931_u8D25" class="headerlink" title="镜像上传失败"></a>镜像上传失败</h3><p>开始上传镜像时一直报错,日志显示是keystone调用出错,后来发现是自己配置错了,囧.</p>
+<h3 id="u865A_u673A_u521B_u5EFA_u5931_u8D25"><a href="#u865A_u673A_u521B_u5EFA_u5931_u8D25" class="headerlink" title="虚机创建失败"></a>虚机创建失败</h3><p>虚机创建时报错,”No valid host was found”, 开始以为是虚机的内存分的不够,更改了虚机配置后仍然报错.<br>查看计算节点的nova-compute日志, “libvirtError: invalid argument: could not find capabilities for domain type=kvm”,<br>感觉VirtualBox的虚机不支持kvm,按照网上说法,应该是从5.0版本已经开始支持kvm了,而且虚机的设置页面,系统硬件加速显示是支持KVM半虚拟化,但是就是不行. 最终只能使用qemu全虚拟化,更改计算节点的<code>nova.conf</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[libvirt]</span><br><span class="line">virt_<span class="built_in">type</span> = qemu</span><br></pre></td></tr></table></figure>
+<p>重启服务后生效,虚机创建成功.</p>
+<h3 id="u865A_u673A_u7F51_u7EDC_u4E0D_u901A"><a href="#u865A_u673A_u7F51_u7EDC_u4E0D_u901A" class="headerlink" title="虚机网络不通"></a>虚机网络不通</h3><p>虚机启动后无法获取地址,手动配置地址后,和所在的计算节点可以互通,但是和管理节点不通.<br>在管理节点抓包,可以抓取到虚机发送的报文.</p>
+<p>同时管理节点可以ping通dhcp-port,但是在计算节点上ping不通dhcp-port的地址.<br>现在不能确定是不是VirtualBox的虚拟网络问题,还是这个地址段的问题</p>
+<p>google了一番, 参考<a href="http://www.innervoice.in/blogs/2015/06/14/virtualbox-networking-settings-for-openstack/" target="_blank" rel="external">这个博客</a> 终于解决了.<br>主要是这里</p>
+<blockquote>
+<p>Tip: it is important to enable Promiscuous mode on eth1, the data traffic interfaces on both compute and controller node. Without this setting packets will not reach from OpenStack tenant VMs (that will be started inside the compute node), to the OpenStack controller.</p>
+</blockquote>
+<p>把对应的网卡设置,选择高级, 把 <code>混杂模式</code> 原来是”拒绝”改成”全部允许”</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/OpenStack/">OpenStack</a><a href="/tags/VirtualBox/">VirtualBox</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/02/01/virtualbox-install-openstack/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/02/01/virtualbox-install-openstack/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/01/19/hello-world/" title="Hello World" itemprop="url">Hello World</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Davyyy" target="_blank" itemprop="author">Davyyy</a>
+		
+  <p class="article-time">
+    <time datetime="2016-01-19T11:58:27.441Z" itemprop="datePublished"> 发表于 2016-01-19</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick_Start"><a href="#Quick_Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create_a_new_post"><a href="#Create_a_new_post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run_server"><a href="#Run_server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate_static_files"><a href="#Generate_static_files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy_to_remote_sites"><a href="#Deploy_to_remote_sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/01/19/hello-world/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/01/19/hello-world/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/01/14/how-to-setup-this-blog/" title="Hexo+GitHub搭建博客" itemprop="url">Hexo+GitHub搭建博客</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Davyyy" target="_blank" itemprop="author">Davyyy</a>
+		
+  <p class="article-time">
+    <time datetime="2016-01-14T14:15:26.000Z" itemprop="datePublished"> 发表于 2016-01-14</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>零零碎碎花了几天时间，终于把博客搭建起来了，下面详细记录下过程。</p>
+<h2 id="u73AF_u5883_u6982_u51B5"><a href="#u73AF_u5883_u6982_u51B5" class="headerlink" title="环境概况"></a>环境概况</h2><p>本机安装Windows10，并安装了VirtualBox创建了一台CentOS7的虚拟机。<br>Hexo（包括themes）和git等软件在虚拟机上安装，因为：</p>
+<ul>
+<li>Linux上安装开源软件方便</li>
+<li>虚拟机可以快照备份，避免重复折腾</li>
+</ul>
+<p>GitHub作为博客网站的托管，同时作为博客Markdown源文件的远程仓库。<br>Markdown文件的编辑在Windows上完成，使用SublimeText编辑器，并使用SFTP插件同步到Linux虚机上。</p>
+<h2 id="u524D_u671F_u5DE5_u4F5C"><a href="#u524D_u671F_u5DE5_u4F5C" class="headerlink" title="前期工作"></a>前期工作</h2><h3 id="u5B89_u88C5VirtualBox_u548CCentOS_u865A_u62DF_u673A"><a href="#u5B89_u88C5VirtualBox_u548CCentOS_u865A_u62DF_u673A" class="headerlink" title="安装VirtualBox和CentOS虚拟机"></a>安装VirtualBox和CentOS虚拟机</h3><p>安装过程略。</p>
+<p>注意，虚机网卡要选择桥接网络，这样可以和本机一样DHCP从路由器获取IP地址并上网，同时本机也可以SecureCRT连接<br>到虚机，默认NAT模式的话本机无法直接ssh到虚机的10.0.2.15地址。</p>
+<h3 id="CentOS_u5B89_u88C5_u5FC5_u8981_u8F6F_u4EF6"><a href="#CentOS_u5B89_u88C5_u5FC5_u8981_u8F6F_u4EF6" class="headerlink" title="CentOS安装必要软件"></a>CentOS安装必要软件</h3><p>安装epel源</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install epel-release.noarch</span></span><br></pre></td></tr></table></figure>
+<p>安装git</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install git</span></span><br></pre></td></tr></table></figure>
+<p>安装npm</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install npm</span></span><br></pre></td></tr></table></figure>
+<h3 id="GitHub_u6CE8_u518C"><a href="#GitHub_u6CE8_u518C" class="headerlink" title="GitHub注册"></a>GitHub注册</h3><p>略</p>
+<h3 id="git_u5FC5_u8981_u914D_u7F6E"><a href="#git_u5FC5_u8981_u914D_u7F6E" class="headerlink" title="git必要配置"></a>git必要配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># git config --global user.name davyyy</span></span><br><span class="line"><span class="comment"># git config --global user.email dawei.si@qq.com</span></span><br></pre></td></tr></table></figure>
+<h3 id="u751F_u6210SSH_key_u5E76_u6DFB_u52A0_u5230GitHub"><a href="#u751F_u6210SSH_key_u5E76_u6DFB_u52A0_u5230GitHub" class="headerlink" title="生成SSH key并添加到GitHub"></a>生成SSH key并添加到GitHub</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -b <span class="number">4096</span> -C <span class="string">"dawei.si@qq.com"</span></span><br></pre></td></tr></table></figure>
+<p>生成到key在 <code>/home/davy/.ssh</code> 目录中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/.ssh</span><br><span class="line">$ ls</span><br><span class="line">id_rsa  id_rsa.pub  known_hosts</span><br><span class="line">$ cat id_rsa.pub</span><br><span class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADA......</span><br></pre></td></tr></table></figure>
+<p>登陆GitHub网站，进入 <code>Settings</code> 页面，选择 <code>SSH keys</code> ，点击<code>Add  SSH key</code>，<br>拷贝 <code>id_ras.pub</code> 中的内容，添加到key中.</p>
+<p>测试连接GitHub</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br><span class="line">The authenticity of host <span class="string">'github.com (192.30.252.128)'</span> can<span class="string">'t be established.</span><br><span class="line">RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.</span><br><span class="line">Are you sure you want to continue connecting (yes/no)? yes</span><br><span class="line">Warning: Permanently added '</span>github.com,<span class="number">192.30</span>.<span class="number">252.128</span><span class="string">' (RSA) to the list of known hosts.</span><br><span class="line">Enter passphrase for key '</span>/home/davy/.ssh/id_rsa<span class="string">': </span><br><span class="line">Hi davyyy! You'</span>ve successfully authenticated, but GitHub does not provide shell access.</span><br></pre></td></tr></table></figure>
+<h2 id="u5B89_u88C5Hexo"><a href="#u5B89_u88C5Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><p>root用户安装hexo命令行</p>
+<p><code># npm install -g hexo-cli</code></p>
+<p>切换到普通用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~</span><br><span class="line">$ hexo init blog</span><br></pre></td></tr></table></figure>
+<p>会自动生成一个 blog 目录，进入该目录继续执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> blog</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
+<h2 id="Hexo_u57FA_u672C_u914D_u7F6E"><a href="#Hexo_u57FA_u672C_u914D_u7F6E" class="headerlink" title="Hexo基本配置"></a>Hexo基本配置</h2><blockquote>
+<p>注意： 以下<code>hexo</code>命令都是在blog目录内执行</p>
+</blockquote>
+<p>编辑hexo的配置文件，位于blog目录下的<code>_config.yml</code>文件，</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># Site</span><br><span class="line">title: Davys Blog    # 主标题</span><br><span class="line">subtitle: 生命在于折腾    # 副标题</span><br><span class="line">description:</span><br><span class="line">author: Davyyy    # 作者名</span><br><span class="line">language: zh-CN    # 简体中文</span><br><span class="line">timezone: Asia/Shanghai    # 时区</span><br></pre></td></tr></table></figure>
+<p>新建一篇博客</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new my-first-blog</span><br></pre></td></tr></table></figure>
+<p>生成的.md文件在<code>blog/source/_posts</code>中，随便写点内容。</p>
+<p>测试一下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br><span class="line">$ hexo server</span><br><span class="line">INFO  Hexo is running at http://<span class="number">0.0</span>.<span class="number">0.0</span>:<span class="number">4000</span>/. Press Ctrl+C to stop.</span><br></pre></td></tr></table></figure>
+<p>浏览器访问<a href="http://192.168.1.111:4000/" target="_blank" rel="external">http://192.168.1.111:4000/</a> （虚机的IP）</p>
+<h2 id="u9759_u6001_u9875_u9762_u90E8_u7F72_u5230GitHub"><a href="#u9759_u6001_u9875_u9762_u90E8_u7F72_u5230GitHub" class="headerlink" title="静态页面部署到GitHub"></a>静态页面部署到GitHub</h2><p>在GitHub上新建名为 <code>davyyy.github.io</code> 的repository，其中davyyy是我在GitHub上的用户名。</p>
+<p>编辑<code>_config.yml</code>，设置<code>Deployment</code>部分配置<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ vim _config.yml</span><br><span class="line"></span><br><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: http://hexo.io/docs/deployment.html</span></span><br><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: git@github.com:davyyy/davyyy.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></p>
+<p>运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>如果前面生成SSH key的时候设置了passphrase，这里会提示输入</p>
+</blockquote>
+<p>一切顺利的话，过一会儿访问 <a href="http://davyyy.github.io/">http://davyyy.github.io/</a> 就能看到效果了</p>
+<p>如果页面没有更新，可以去GitHub仓库 <a href="https://github.com/davyyy/davyyy.github.io" target="_blank" rel="external">https://github.com/davyyy/davyyy.github.io</a> 看看页面是否已经上传。</p>
+<h2 id="u535A_u5BA2_u6E90_u6587_u4EF6_u6258_u7BA1_u5230GitHub"><a href="#u535A_u5BA2_u6E90_u6587_u4EF6_u6258_u7BA1_u5230GitHub" class="headerlink" title="博客源文件托管到GitHub"></a>博客源文件托管到GitHub</h2><p>在GitHub上新建一个repository，名称和本地目录保持一致，也叫blog。</p>
+<p>创建本地仓库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/blog</span><br><span class="line">$ git init</span><br></pre></td></tr></table></figure>
+<p>编辑.gitignore<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ vim .gitignore </span><br><span class="line">node_modules/</span><br><span class="line">public/</span><br><span class="line">.deploy_git/</span><br><span class="line">db.json</span><br></pre></td></tr></table></figure></p>
+<p>添加远程仓库<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add origin git@github.com:davyyy/blog.git</span><br></pre></td></tr></table></figure></p>
+<p>将所有文件都保存到本地仓库<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git add .</span><br><span class="line">$ git commit -m <span class="string">"add all files"</span></span><br></pre></td></tr></table></figure></p>
+<p>推送到远程仓库<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin master</span><br></pre></td></tr></table></figure></p>
+<h2 id="u914D_u7F6EHexo_u7684Themes"><a href="#u914D_u7F6EHexo_u7684Themes" class="headerlink" title="配置Hexo的Themes"></a>配置Hexo的Themes</h2><p><a href="https://hexo.io/themes/" target="_blank" rel="external">Hexo官网</a> 上有很多主题推荐，可以预览一遍，选择一个自己喜欢的。<br>在尝试了 <a href="http://notes.iissnan.com/" target="_blank" rel="external">NexT</a> 和 <a href="http://wuchong.me/jacman/" target="_blank" rel="external">Jacman</a>之后，最(zan)终(shi)选择了Jacman.</p>
+<p>这里要 <strong>注意</strong> 一下主题的安装方式</p>
+<p>文档中写的是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/wuchong/jacman.git themes/jacman</span><br></pre></td></tr></table></figure>
+<p>因为blog目录本身已经是一个git仓库了，这里又clone了一个过来，会造成blog自身库的更新问题.<br>如果把jacman下的<code>.git</code>目录删掉，blog更新没问题了，但是以后主题版本的更新会比较麻烦。</p>
+<p>搜索了一番，使用 <code>git submodule</code> 命令添加即可：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git submodule add https://github.com/wuchong/jacman.git themes/jacman</span><br></pre></td></tr></table></figure></p>
+<p>按照 <a href="http://wuchong.me/jacman/2014/11/20/how-to-use-jacman/" target="_blank" rel="external">文档</a> 配置主题.<br>因为主题文件夹也是git库，所以配置文件有改动后，要把改动commit一下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> themes/jacman/</span><br><span class="line">$ git add .</span><br><span class="line">$ git commit -m <span class="string">"change config, change logo,author image"</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里主题的改动就不用push到GitHub上了</p>
+</blockquote>
+<h2 id="Sublime_Text_u53CASFTP_u63D2_u4EF6_u7684_u5B89_u88C5_u914D_u7F6E"><a href="#Sublime_Text_u53CASFTP_u63D2_u4EF6_u7684_u5B89_u88C5_u914D_u7F6E" class="headerlink" title="Sublime Text及SFTP插件的安装配置"></a>Sublime Text及SFTP插件的安装配置</h2><h3 id="u5B89_u88C5_u6E05_u5355"><a href="#u5B89_u88C5_u6E05_u5355" class="headerlink" title="安装清单"></a>安装清单</h3><ol>
+<li>安装Sublime Text3</li>
+<li>安装Package Control</li>
+<li>通过Package Control安装以下插件：</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>插件名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Project Manager</td>
+<td>方便项目管理</td>
+</tr>
+<tr>
+<td>IMESupport</td>
+<td>解决输入法不跟随问题</td>
+</tr>
+<tr>
+<td>SFTP</td>
+<td>通过SSH同步文件</td>
+</tr>
+<tr>
+<td>SideBarEnhancements</td>
+<td>侧边栏功能增强</td>
+</tr>
+</tbody>
+</table>
+<h3 id="u914D_u7F6E_u8FC7_u7A0B"><a href="#u914D_u7F6E_u8FC7_u7A0B" class="headerlink" title="配置过程"></a>配置过程</h3><p>在Windows中新建文件夹Blog，这里我只想和CentOS同步博客的源文件，即source目录，</p>
+<ol>
+<li>在Windows中新建文件夹Blog</li>
+<li>使用Sublime Text打开Blog文件夹</li>
+<li><code>Project</code> -&gt; <code>Project Manager</code> -&gt; <code>Add Project</code> 新建一个项目，方便以后打开</li>
+<li>Blog目录中新建文件夹source，这里我只想和CentOS同步博客的源文件</li>
+<li>侧栏在source上右键，<code>SFTP/FTP</code> -&gt; <code>Map to Remote..</code></li>
+<li>配置自动生成的<code>sftp-config.json</code>文件</li>
+<li>先将远程的文件夹同步到本地</li>
+</ol>
+<p>主要的配置项：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"host"</span>: <span class="string">"192.168.1.111"</span>,</span><br><span class="line"><span class="string">"user"</span>: <span class="string">"davy"</span>,</span><br><span class="line"><span class="string">"password"</span>: <span class="string">"123456"</span>,</span><br><span class="line"></span><br><span class="line"><span class="string">"remote_path"</span>: <span class="string">"/home/davy/blog/source"</span>,</span><br></pre></td></tr></table></figure>
+<p>文件编辑完成后，右键选择<code>Upload</code>（当然也可以使用<code>ctrl-shift-p</code>或快捷键）即可同步到远程。</p>
+<h2 id="u5DE5_u4F5C_u6D41_u7A0B"><a href="#u5DE5_u4F5C_u6D41_u7A0B" class="headerlink" title="工作流程"></a>工作流程</h2><ol>
+<li>打开SublimeText，打开Blog项目</li>
+<li>新建文件或编辑原有文件</li>
+<li>上传文件</li>
+<li>登录Linux执行 <code>hexo g</code>, <code>hexo s</code></li>
+<li>浏览器访问，检查内容和效果</li>
+<li>一切ok的话执行下面命令同步博客源文件</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git add .</span><br><span class="line">$ git commit -m <span class="string">"xxx xxx"</span></span><br><span class="line">$ git push origin master</span><br></pre></td></tr></table></figure>
+<p>最后还要将博客页面发布到GitHub上</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
+<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><ul>
+<li>添加评论系统</li>
+<li>添加站内搜索</li>
+</ul>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Blog/">Blog</a><a href="/tags/Hexo/">Hexo</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/01/14/how-to-setup-this-blog/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/01/14/how-to-setup-this-blog/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+
+</div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/OpenStack/" title="OpenStack">OpenStack<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/VirtualBox/" title="VirtualBox">VirtualBox<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Blog/" title="Blog">Blog<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://wuchong.me" target="_blank" title="Jark&#39;s Blog">Jark&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Davyyy in nowhere. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/5388740183" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="Davyyy">Davyyy</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+ </html>
