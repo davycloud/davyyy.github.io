@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="司大伟">
+  <meta name="dcterms.date" content="2016-06-25">
+  <title>Python编码规范</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js/css/reveal.css">
+  <style type="text/css">code{white-space: pre;}</style>
+
+<!-- For syntax highlighting -->
+  <link rel="stylesheet" href="reveal.js/lib/css/zenburn.css">
+
+  <link rel="stylesheet" href="reveal.js/css/theme/beige.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal.js/css/print/pdf.css' : 'reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+  <h1 class="title">Python编码规范</h1>
+  <h2 class="author">司大伟</h2>
+  <h3 class="date">2016-06-25</h3>
+</section>
+
+<section><section id="概述" class="titleslide slide level1"><h1>概述</h1></section><section id="什么是pep8" class="slide level2">
+<h1>什么是PEP8</h1>
+<p>PEP = Python Enhancement Proposal</p>
+<p>PEP8 = Style Guide for Python Code</p>
+</section><section id="为什么要讲究代码规范" class="slide level2">
+<h1>为什么要讲究代码规范</h1>
+<p>Guido:</p>
+<pre><code>Code is read much more often than it is written</code></pre>
+</section><section id="什么时候不必遵守规范" class="slide level2">
+<h1>什么时候不必遵守规范</h1>
+<ul>
+<li class="fragment">使得代码可读性变差</li>
+<li class="fragment">破坏当前代码风格的连续性(比如历史原因)</li>
+<li class="fragment">当代码需要保持向后兼容性</li>
+</ul>
+</section></section>
+<section><section id="代码布局" class="titleslide slide level1"><h1>代码布局</h1></section><section id="缩进" class="slide level2">
+<h1>缩进</h1>
+<ul>
+<li class="fragment">使用4个空格作为一级缩进</li>
+<li class="fragment">不要混用Tab和空格</li>
+<li class="fragment">设置编辑器将Tab转为空格</li>
+</ul>
+</section><section class="slide level2">
+
+<h3 id="连续行的对齐">连续行的对齐</h3>
+<p>被括号括起来的连续的长行, 比如函数定义/调用, 列表, 字典, 在换行时有两种对齐风格.</p>
+<pre class="python"><code># 以括号为界, 垂直对齐.
+foo = long_function_name(var_one, var_two,
+                         var_three, var_four)
+</code></pre>
+<div class="fragment">
+<p>一种是悬挂式缩进(hanging indent)</p>
+<pre class="python"><code># 从括号起始就换行, 比正常的缩进多缩进一点以示区分.
+def long_function_name(
+        var_one, var_two, var_three,
+        var_four):
+    print(var_one)</code></pre>
+</div>
+<h3 id="不好的风格">不好的风格</h3>
+<pre class="python"><code># 没有垂直对齐, 第一行参数就显得不突出.
+foo = long_function_name(var_one, var_two,
+    var_three, var_four)
+
+# 和正常的函数体语句缩进一样, 不好区分.
+def long_function_name(
+    var_one, var_two, var_three,
+    var_four):
+    print(var_one)</code></pre>
+<h3 id="if语句的缩进">IF语句的缩进</h3>
+<p>当if语句后面的条件判断需要折行时, if占2个字符, 加上空格和左括号, 总共刚好是4个字符. 也就是说, 这时候如果是垂直对齐的话, 就和下面的语句缩进一样了, 例如:</p>
+<pre class="python"><code># No extra indentation.
+if (this_is_one_thing and
+    that_is_another_thing):
+    do_something()</code></pre>
+</section><section class="slide level2">
+
+<h3 id="if语句的缩进-1">IF语句的缩进</h3>
+<pre class="python"><code># 添加一行注释, 这样在语法高亮的编辑器中会显得有所区别
+# 但是pycharm中的pep8检测还是会提示
+if (this_is_one_thing and
+    that_is_another_thing):
+    # Since both conditions are true, we can frobnicate.
+    do_something()
+
+# 增加额外的缩进.
+if (this_is_one_thing
+        and that_is_another_thing):
+    do_something()</code></pre>
+</section><section class="slide level2">
+
+<h3 id="右括号的位置">右括号的位置</h3>
+<p>多行语句中右括号(包括 圆括号,方括号,花括号)的位置也有两种情况</p>
+<pre class="python"><code># 和第一个非空字符对齐
+my_list = [
+    1, 2, 3,
+    4, 5, 6,
+    ]
+result = some_function_that_takes_arguments(
+    &#39;a&#39;, &#39;b&#39;, &#39;c&#39;,
+    &#39;d&#39;, &#39;e&#39;, &#39;f&#39;,
+    )</code></pre>
+<pre class="python"><code># 置于行首
+my_list = [
+    1, 2, 3,
+    4, 5, 6,
+]
+result = some_function_that_takes_arguments(
+    &#39;a&#39;, &#39;b&#39;, &#39;c&#39;,
+    &#39;d&#39;, &#39;e&#39;, &#39;f&#39;,
+)</code></pre>
+</section><section id="二元运算符的位置" class="slide level2">
+<h1>二元运算符的位置</h1>
+<pre class="python"><code># No: 运算符和运算对象离得太远了
+income = (gross_wages +
+          taxable_interest +
+          (dividends - qualified_dividends) -
+          ira_deduction -
+          student_loan_interest)</code></pre>
+<pre class="python"><code># Yes: 运算符和运算对象很容易匹配
+income = (gross_wages
+          + taxable_interest
+          + (dividends - qualified_dividends)
+          - ira_deduction
+          - student_loan_interest)</code></pre>
+</section><section id="空行" class="slide level2">
+<h1>空行</h1>
+<ul>
+<li class="fragment">顶层的函数和类定义之间用两个空行隔开</li>
+<li class="fragment">类中的方法定义之间用一个空行隔开</li>
+<li class="fragment">使用额外的空行来区分某组相关联的函数(保守使用)</li>
+<li class="fragment">在函数中也可以用空行分隔不同的逻辑段(保守使用)</li>
+<li class="fragment">连续的单行语句之间的空行可以省略</li>
+</ul>
+</section><section id="源文件编码" class="slide level2">
+<h1>源文件编码</h1>
+<ul>
+<li class="fragment">Python2中默认的编码是ASCII</li>
+<li class="fragment">Python3中默认的编码是UTF-8</li>
+<li class="fragment">使用默认编码的无需编码声明</li>
+</ul>
+</section><section id="模块导入" class="slide level2">
+<h1>模块导入</h1>
+<p>导入语句一般都要独占一行</p>
+<pre class="python"><code>Yes: import os
+     import sys
+
+No:  import sys, os</code></pre>
+</section><section id="标题" class="slide level2">
+<h1>标题</h1>
+<pre class="python"><code></code></pre>
+</section><section id="标题-1" class="slide level2">
+<h1>标题</h1>
+<pre class="python"><code></code></pre>
+</section><section id="标题-2" class="slide level2">
+<h1>标题</h1>
+<pre class="python"><code></code></pre>
+</section><section id="标题-3" class="slide level2">
+<h1>标题</h1>
+<pre class="python"><code></code></pre>
+</section><section id="python" class="slide level2">
+<h1>python</h1>
+<p>Good:</p>
+<pre class="python"><code>import sys
+import os
+
+print 123
+</code></pre>
+<div class="fragment">
+<p>Bad:</p>
+<pre class="python"><code>import sys
+import os
+
+def foo():
+    pass
+
+
+</code></pre>
+</div>
+</section><section id="bash" class="slide level2">
+<h1>bash</h1>
+<pre class="bash"><code>cd /root
+pwd
+ls
+</code></pre>
+</section></section>
+    </div>
+  </div>
+
+  <script src="reveal.js/lib/js/head.min.js"></script>
+  <script src="reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: 'reveal.js/plugin/notes/notes.js', async: true },
+          { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+        ]
+      });
+    </script>
+    </body>
+</html>
