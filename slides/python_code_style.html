@@ -42,12 +42,13 @@
 <h1>什么是PEP8</h1>
 <p>PEP = Python Enhancement Proposal</p>
 <p>PEP8 = Style Guide for Python Code</p>
-</section><section id="为什么要讲究代码规范" class="slide level2">
-<h1>为什么要讲究代码规范</h1>
+</section><section id="为什么要代码规范" class="slide level2">
+<h1>为什么要代码规范</h1>
 <p>Guido:</p>
-<pre><code>Code is read much more often than it is written</code></pre>
-</section><section id="什么时候不必遵守规范" class="slide level2">
-<h1>什么时候不必遵守规范</h1>
+<p><strong>Code is read much more often than it is written.</strong></p>
+</section><section class="slide level2">
+
+<h3 id="什么时候不必遵守规范">什么时候不必遵守规范</h3>
 <ul>
 <li class="fragment">使得代码可读性变差</li>
 <li class="fragment">破坏当前代码风格的连续性(比如历史原因)</li>
@@ -63,8 +64,9 @@
 </ul>
 </section><section class="slide level2">
 
-<h3 id="连续行的对齐">连续行的对齐</h3>
+<h3 id="断行的对齐">断行的对齐</h3>
 <p>被括号括起来的连续的长行, 比如函数定义/调用, 列表, 字典, 在换行时有两种对齐风格.</p>
+<p>一种是垂直对齐.</p>
 <pre class="python"><code># 以括号为界, 垂直对齐.
 foo = long_function_name(var_one, var_two,
                          var_three, var_four)
@@ -89,6 +91,8 @@ def long_function_name(
     var_one, var_two, var_three,
     var_four):
     print(var_one)</code></pre>
+</section><section class="slide level2">
+
 <h3 id="if语句的缩进">IF语句的缩进</h3>
 <p>当if语句后面的条件判断需要折行时, if占2个字符, 加上空格和左括号, 总共刚好是4个字符. 也就是说, 这时候如果是垂直对齐的话, 就和下面的语句缩进一样了, 例如:</p>
 <pre class="python"><code># No extra indentation.
@@ -122,6 +126,7 @@ result = some_function_that_takes_arguments(
     &#39;a&#39;, &#39;b&#39;, &#39;c&#39;,
     &#39;d&#39;, &#39;e&#39;, &#39;f&#39;,
     )</code></pre>
+<div class="fragment">
 <pre class="python"><code># 置于行首
 my_list = [
     1, 2, 3,
@@ -131,6 +136,7 @@ result = some_function_that_takes_arguments(
     &#39;a&#39;, &#39;b&#39;, &#39;c&#39;,
     &#39;d&#39;, &#39;e&#39;, &#39;f&#39;,
 )</code></pre>
+</div>
 </section><section class="slide level2">
 
 <h3 id="二元运算符的位置">二元运算符的位置</h3>
@@ -213,9 +219,18 @@ obj = myclass.MyClass()</code></pre>
 <h3 id="避免使用import">避免使用import *</h3>
 <p>尽量避免使用import *语句, 这样会造成本地命名空间不清晰, 对阅读代码以及一些自动化处理工具都会造成困扰.</p>
 <p>只有一种例外的情况:</p>
-<pre><code>当需要把内部接口重新发布为外部接口</code></pre>
-</section><section id="module中的特殊变量" class="slide level2">
-<h1>module中的特殊变量</h1>
+<p><em>当需要把内部接口重新发布为外部接口</em></p>
+</section><section id="module中的-__name__" class="slide level2">
+<h1>module中的 <em><code>__name__</code></em></h1>
+<p>模块级别的特殊名称, 即以两个下划线开始和结束的名称如 <code>__all__</code> , <code>__author__</code> , <code>__version__</code> 等. 位置应该:</p>
+<ul>
+<li class="fragment">置于docstring之后,</li>
+<li class="fragment">import语句之前,</li>
+<li class="fragment">除了 from <code>__future__</code> import xx</li>
+</ul>
+</section><section class="slide level2">
+
+<h3 id="举例">举例</h3>
 <pre class="python"><code>&quot;&quot;&quot;This is the example module.
 
 This module does stuff.
@@ -230,28 +245,269 @@ __author__ = &#39;Cardinal Biggles&#39;
 import os
 import sys</code></pre>
 </section></section>
-<section><section id="空白" class="titleslide slide level1"><h1>空白</h1></section><section id="不能加空格" class="slide level2">
-<h1>不能加空格</h1>
+<section><section id="空白" class="titleslide slide level1"><h1>空白</h1></section><section id="不要加空格的地方" class="slide level2">
+<h1>不要加空格的地方</h1>
+<p>以下几种情况应该避免使用无关的空格</p>
+</section><section class="slide level2">
+
 <p>括号内部两边紧挨着括号的地方不要有空格</p>
 <pre class="python"><code>Yes: spam(ham[1], {eggs: 2})
 No:  spam( ham[ 1 ], { eggs: 2 } )</code></pre>
-<div class="fragment">
+</section><section class="slide level2">
+
 <p>冒号, 逗号, 分号的前面不要有空格</p>
 <pre class="python"><code>Yes: if x == 4: print x, y; x, y = y, x
 No:  if x == 4 : print x , y ; x , y = y , x</code></pre>
-</div>
 </section><section class="slide level2">
 
-<h3 id="切片语句中的冒号">切片语句中的冒号</h3>
+<p>切片语句中的冒号</p>
 <p>切片语句中, 冒号的作用类似于二元运算符, 在某些情况下可以在两边有对等的空格</p>
 <pre class="python"><code>ham[1:9], ham[1:9:3], ham[:9:3], ham[1::3], ham[1:9:]
 ham[lower:upper], ham[lower:upper:], ham[lower::step]
 ham[lower+offset : upper+offset]
 ham[: upper_fn(x) : step_fn(x)], ham[:: step_fn(x)]
 ham[lower + offset : upper + offset]</code></pre>
+</section><section class="slide level2">
+
+<p>紧跟在函数调用后面的括号</p>
+<pre class="python"><code>Yes: spam(1)
+No:  spam (1)</code></pre>
+</section><section class="slide level2">
+
+<p>紧跟在索引或切片后面的括号</p>
+<pre class="python"><code>Yes: dct[&#39;key&#39;] = lst[index]
+No:  dct [&#39;key&#39;] = lst [index]</code></pre>
+</section><section class="slide level2">
+
+<p>不要为了对齐在运算符两边添加多余的空格</p>
+<pre class="python"><code># Yes:
+x = 1
+y = 2
+long_variable = 3
+
+# No:
+x             = 1
+y             = 2
+long_variable = 3</code></pre>
+</section><section id="其它建议" class="slide level2">
+<h1>其它建议</h1>
+</section><section class="slide level2">
+
+<h3 id="避免行末拖尾的空格">避免行末拖尾的空格</h3>
+<ul>
+<li class="fragment">避免在任何地方出现拖尾的空格, 因为编辑器中这些空格一般都不可见, 可能会导致困扰.</li>
+<li class="fragment">例如如果一个反斜杠后面跟有空格, 则这个反斜杠就起不到续行的作用.</li>
+<li class="fragment">有的编辑器(包括PyCharm)会在保存文件时自动去除这些空格.</li>
+</ul>
+</section><section class="slide level2">
+
+<h3 id="二元操作符">二元操作符</h3>
+<p>总是在二元操作符两边都加一个空格. 包括:</p>
+<ul>
+<li class="fragment">赋值符: <code>=</code></li>
+<li class="fragment">增量赋值: <code>+= , -=</code> 等</li>
+<li class="fragment">比较符: <code>== , &lt; , &gt; , != , &lt;&gt; , &lt;= , &gt;= , in , not in , is , is not</code></li>
+<li class="fragment">布尔操作: <code>and , or , not</code></li>
+</ul>
+</section><section class="slide level2">
+
+<p>如果涉及到多个优先级的操作符, 可以考虑在较低优先级的操作符两边加空格, 省略高优先级操作符两边的空格.</p>
+<p>YES:</p>
+<pre class="python"><code>i = i + 1
+submitted += 1
+x = x*2 - 1
+hypot2 = x*x + y*y
+c = (a+b) * (a-b)</code></pre>
+<p>NO:</p>
+<pre class="python"><code>i=i+1
+submitted +=1
+# 以下情况实际也是可以接受的, 例如
+# pycharm自动格式化的结果就是在运算符两边统一加空格
+x = x * 2 - 1
+hypot2 = x * x + y * y
+c = (a + b) * (a - b)</code></pre>
+</section><section class="slide level2">
+
+<p>在定义默认参数值的时候不要在 <code>=</code> 两边加空格.</p>
+<p>YES:</p>
+<pre class="python"><code>def complex(real, imag=0.0):
+    return magic(r=real, i=imag)</code></pre>
+<p>NO:</p>
+<pre class="python"><code>def complex(real, imag = 0.0):
+    return magic(r = real, i = imag)</code></pre>
+</section><section class="slide level2">
+
+<p>不建议把多条语句放在同一行</p>
+<p>YES:</p>
+<pre class="python"><code>if foo == &#39;blah&#39;:
+    do_blah_thing()
+do_one()
+do_two()
+do_three()</code></pre>
+<p>NO:</p>
+<pre class="python"><code>if foo == &#39;blah&#39;: do_blah_thing()
+do_one(); do_two(); do_three()</code></pre>
+</section><section class="slide level2">
+
+<p>偶尔有些情况下, if/for/while/ 语句非常短, 放在一行是可以接受的(虽然不建议), 例如</p>
+<pre class="python"><code># pycharm这种情况会提示, 但是自动格式化不会修改
+if foo == &#39;blah&#39;: do_blah_thing()</code></pre>
+<p>但是在有多个子句时绝对不要这样做!</p>
+<pre class="python"><code>if foo == &#39;blah&#39;: do_blah_thing()
+else: do_non_blah_thing()
+
+try: something()
+finally: cleanup()
+
+do_one(); do_two(); do_three(long, argument,
+                             list, like, this)
+
+if foo == &#39;blah&#39;: one(); two(); three()</code></pre>
 </section></section>
-<section><section id="注释" class="titleslide slide level1"><h1>注释</h1></section></section>
-<section><section id="命名" class="titleslide slide level1"><h1>命名</h1></section></section>
+<section><section id="注释" class="titleslide slide level1"><h1>注释</h1></section><section id="注意事项" class="slide level2">
+<h1>注意事项</h1>
+<ul>
+<li class="fragment">与代码矛盾的注释不如没有, 请记得及时同步更新注释</li>
+</ul>
+<div class="fragment">
+<p>以下建议主要针对英语:</p>
+<ul>
+<li class="fragment">最好把注释写成完整的句子, 所以请注意句首大小写(除了该词是一个标识符)</li>
+<li class="fragment">如果注释很短, 可以忽略句号, 但是如果包含多个句子, 则每句都应该以句号结尾</li>
+<li class="fragment">请遵从英文写作指南</li>
+</ul>
+</div>
+<div class="fragment">
+<p>但是..., 最后一个建议是</p>
+<ul>
+<li class="fragment">非英语国的coder请使用English写注释, 除非120%确定该代码不会被歪果仁读到</li>
+</ul>
+</div>
+</section><section id="块注释" class="slide level2">
+<h1>块注释</h1>
+<ul>
+<li class="fragment">块注释一般针对其下方的代码, 与所解释的代码缩进保持一致.</li>
+<li class="fragment">每行注释以 <code>#</code> 后面紧跟一个空格开始(其中内容有缩进的话可以有多个空格).</li>
+<li class="fragment">注释内的段落分段的空行只包含一个 <code>#</code></li>
+</ul>
+</section><section id="行内注释" class="slide level2">
+<h1>行内注释</h1>
+<ul>
+<li class="fragment">保守地使用行内注释</li>
+<li class="fragment">行内注释和语句在同一行, 注释需要与语句之间用两个空格以上空格隔开</li>
+<li class="fragment">注释的 <code>#</code> 后面也要有一个空格</li>
+<li class="fragment">如果代码的意思很明显, 则需要避免行内注释</li>
+</ul>
+<div class="fragment">
+<p>下面的注释不需要</p>
+<pre class="python"><code>x = x + 1                 # Increment x</code></pre>
+<p>有时候也有必要</p>
+<pre class="python"><code>x = x + 1                 # Compensate for border</code></pre>
+</div>
+</section><section id="文档字符串" class="slide level2">
+<h1>文档字符串</h1>
+<p>文档字符串(docstrings)经常充当解释代码意图的作用.</p>
+<p>如何写好文档字符串, 有专门的 <a href="https://www.python.org/dev/peps/pep-0257">PEP 257</a>介绍.</p>
+</section><section class="slide level2">
+
+<h3 id="如何写文档字符串">如何写文档字符串</h3>
+<ul>
+<li class="fragment">一般是针对public的模块/函数/类/方法等编写docstring.</li>
+<li class="fragment">私有的方法一般没必要写docstring, 但是往往需要添加注释, 则注释一般加在 <code>def</code> 行的下面.</li>
+<li class="fragment">结尾的 <code>&quot;&quot;&quot;</code> 的位置, 如果是多行内容, 结尾引号独占一行;</li>
+<li class="fragment">如果只有一行内容, 结尾引号可以在同一行.</li>
+</ul>
+<div class="fragment">
+<pre class="python"><code>&quot;&quot;&quot;Return a foobang
+
+Optional plotz says to frobnicate the bizbaz first.
+&quot;&quot;&quot;</code></pre>
+</div>
+</section></section>
+<section><section id="命名规范" class="titleslide slide level1"><h1>命名规范</h1></section><section id="遵循现状" class="slide level2">
+<h1>遵循现状</h1>
+<ul>
+<li class="fragment"><p>Python库中的命名规范比较混乱, 所以永远不可能达到彻底的统一.</p></li>
+<li class="fragment"><p>下面要介绍的是当前推荐的命名规范和标准, 在实现新的模块或库时, 需要遵守这些规范.</p></li>
+<li class="fragment"><p>但是对于已有的不同风格的库, 还是更建议遵循现状, 保持其内部的一致性.</p></li>
+</ul>
+</section><section id="最重要的原则" class="slide level2">
+<h1>最重要的原则</h1>
+<p>需要以public API暴露给用户的命名需要遵从:</p>
+<p><strong>反映用途, 而不是实现.</strong></p>
+</section><section id="命名风格" class="slide level2">
+<h1>命名风格</h1>
+<p>存在多种不同的命名风格.</p>
+<ul>
+<li class="fragment">b (单个小写字母)</li>
+<li class="fragment">B (单个大写字母)</li>
+<li class="fragment">lowercase</li>
+<li class="fragment">lower_case_with_underscores</li>
+<li class="fragment">UPPERCASE</li>
+<li class="fragment">UPPER_CASE_WITH_UNDERSCORES</li>
+<li class="fragment">CapitalizedWords (又称CamelCase, 即驼峰命名法)</li>
+<li class="fragment">mixedCase</li>
+<li class="fragment">Capitalized_Words_With_Underscores (丑陋!)</li>
+</ul>
+</section><section class="slide level2">
+
+<h3 id="一些特殊的前缀">一些特殊的前缀</h3>
+<ul>
+<li class="fragment"><p>有一种命名风格是在名称前面带上一个特别的短前缀, 用来分类标示相关联的名称.</p></li>
+<li class="fragment"><p>这种用法在Python中不多见, 主要是一些比较古老的实现, 例如:</p>
+<p><code>os.stat()</code> 函数返回的元组中的项的传统命名是 <code>st_mode , st_size , st_mtime</code>, 这样做是为了和POSIX系统调用的结构体字段保持一致.</p></li>
+<li class="fragment"><p>一般情况下, 应该避免使用这种带前缀的命名风格.</p></li>
+</ul>
+</section><section class="slide level2">
+
+<h3 id="下划线前缀后缀">下划线前缀/后缀</h3>
+<p>下划线作为前缀/后缀有以下几种情况(可以和不同的大小写风格组合):</p>
+<ul>
+<li class="fragment"><p><code>_single_leading_underscore</code></p>
+<p>&quot;内部使用&quot; 标示</p></li>
+<li class="fragment"><p><code>single_trailing_underscore_</code></p>
+<p>用于避免和Python关键字冲突</p></li>
+<li class="fragment"><p><code>__double_leading_underscore</code></p>
+<p>作为类的属性时, invokes name mangling (inside class FooBar, __boo becomes _FooBar__boo ; see below).</p></li>
+<li class="fragment"><p><code>__double_leading_and_trailing_underscore__</code></p>
+<p>&quot;magic&quot; objects or attributes that live in user-controlled namespaces</p></li>
+</ul>
+</section><section id="命名规范-1" class="slide level2">
+<h1>命名规范</h1>
+</section><section class="slide level2">
+
+<h3 id="避免用到的名字">避免用到的名字</h3>
+<ul>
+<li class="fragment">单字符变量应该避免使用: <code>l O I</code></li>
+<li class="fragment"></li>
+</ul>
+</section><section class="slide level2">
+
+<h3 id="包和模块名">包和模块名</h3>
+</section><section class="slide level2">
+
+<h3 id="异常的命名">异常的命名</h3>
+</section><section class="slide level2">
+
+<h3 id="全局变量的命名">全局变量的命名</h3>
+</section><section class="slide level2">
+
+<h3 id="函数的命名">函数的命名</h3>
+</section><section class="slide level2">
+
+<h3 id="函数和方法的参数命名">函数和方法的参数命名</h3>
+</section><section class="slide level2">
+
+<h3 id="方法的命名和实例变量">方法的命名和实例变量</h3>
+</section><section class="slide level2">
+
+<h3 id="常量的命名">常量的命名</h3>
+</section><section class="slide level2">
+
+<h3 id="关于继承的设计">关于继承的设计</h3>
+</section><section id="外部和内部接口" class="slide level2">
+<h1>外部和内部接口</h1>
+</section></section>
 <section><section id="编码建议" class="titleslide slide level1"><h1>编码建议</h1></section></section>
     </div>
   </div>
