@@ -378,7 +378,7 @@ if foo == &#39;blah&#39;: one(); two(); three()</code></pre>
 </ul>
 </div>
 <div class="fragment">
-<p>但是..., 最后一个建议是</p>
+<p>但是, 最后一个建议是...</p>
 <ul>
 <li class="fragment">非英语国的coder请使用English写注释, 除非120%确定该代码不会被歪果仁读到</li>
 </ul>
@@ -393,7 +393,7 @@ if foo == &#39;blah&#39;: one(); two(); three()</code></pre>
 </section><section id="行内注释" class="slide level2">
 <h1>行内注释</h1>
 <ul>
-<li class="fragment">保守地使用行内注释</li>
+<li class="fragment">谨慎地使用行内注释</li>
 <li class="fragment">行内注释和语句在同一行, 注释需要与语句之间用两个空格以上空格隔开</li>
 <li class="fragment">注释的 <code>#</code> 后面也要有一个空格</li>
 <li class="fragment">如果代码的意思很明显, 则需要避免行内注释</li>
@@ -477,38 +477,223 @@ Optional plotz says to frobnicate the bizbaz first.
 </section><section class="slide level2">
 
 <h3 id="避免用到的名字">避免用到的名字</h3>
+<p>单字符变量应该避免使用: <code>l O I</code></p>
 <ul>
-<li class="fragment">单字符变量应该避免使用: <code>l O I</code></li>
-<li class="fragment"></li>
+<li class="fragment">选择一个合适的字体, 可以比较清楚的区分这些字符</li>
 </ul>
 </section><section class="slide level2">
 
 <h3 id="包和模块名">包和模块名</h3>
+<ul>
+<li class="fragment"><p>模块名应该使用简短的, 全小写的名称</p></li>
+<li class="fragment"><p>如果有助于增强可读性, 模块名可以使用下划线</p></li>
+<li class="fragment"><p>包的名称也应该是简短的, 全小写, 但是不推荐使用下划线</p></li>
+</ul>
+</section><section class="slide level2">
+
+<h3 id="类的命名">类的命名</h3>
+<ul>
+<li class="fragment"><p>类名一般使用驼峰命名法, CapWords</p></li>
+<li class="fragment"><p>某些情况下, 类被当作callable使用, 这时适用于函数命名规范</p></li>
+<li class="fragment"><p>builtin名称是特例, 大部分的builtin名是一个小写单词(或两个词连一起), 除了</p></li>
+<li class="fragment"><p>异常和常量是使用驼峰命名</p></li>
+</ul>
+<pre class="python"><code>&gt;&gt;&gt; import __builtin__
+&gt;&gt;&gt; dir(__builtin__)
+[&#39;ArithmeticError&#39;, &#39;AssertionError&#39;, &#39;AttributeError&#39;, &#39;BaseException&#39;, &#39;BufferError&#39;, &#39;BytesWarning&#39;, &#39;DeprecationWarning&#39;, &#39;EOFError&#39;, &#39;Ellipsis&#39;, &#39;EnvironmentError&#39;, &#39;Exception&#39;, &#39;False&#39;, &#39;FloatingPointError&#39;, &#39;FutureWarning&#39;, &#39;GeneratorExit&#39;, &#39;IOError&#39;, &#39;ImportError&#39;, &#39;ImportWarning&#39;, &#39;IndentationError&#39;, &#39;IndexError&#39;, &#39;KeyError&#39;, &#39;KeyboardInterrupt&#39;, &#39;LookupError&#39;, &#39;MemoryError&#39;, &#39;NameError&#39;, &#39;None&#39;, &#39;NotImplemented&#39;, &#39;NotImplementedError&#39;, &#39;OSError&#39;, &#39;OverflowError&#39;, &#39;PendingDeprecationWarning&#39;, &#39;ReferenceError&#39;, &#39;RuntimeError&#39;, &#39;RuntimeWarning&#39;, &#39;StandardError&#39;, &#39;StopIteration&#39;, &#39;SyntaxError&#39;, &#39;SyntaxWarning&#39;, &#39;SystemError&#39;, &#39;SystemExit&#39;, &#39;TabError&#39;, &#39;True&#39;, &#39;TypeError&#39;, &#39;UnboundLocalError&#39;, &#39;UnicodeDecodeError&#39;, &#39;UnicodeEncodeError&#39;, &#39;UnicodeError&#39;, &#39;UnicodeTranslateError&#39;, &#39;UnicodeWarning&#39;, &#39;UserWarning&#39;, &#39;ValueError&#39;, &#39;Warning&#39;, &#39;ZeroDivisionError&#39;, &#39;__debug__&#39;, &#39;__doc__&#39;, &#39;__import__&#39;, &#39;__name__&#39;, &#39;__package__&#39;, &#39;abs&#39;, &#39;all&#39;, &#39;any&#39;, &#39;apply&#39;, &#39;basestring&#39;, &#39;bin&#39;, &#39;bool&#39;, &#39;buffer&#39;, &#39;bytearray&#39;, &#39;bytes&#39;, &#39;callable&#39;, &#39;chr&#39;, &#39;classmethod&#39;, &#39;cmp&#39;, &#39;coerce&#39;, &#39;compile&#39;, &#39;complex&#39;, &#39;copyright&#39;, &#39;credits&#39;, &#39;delattr&#39;, &#39;dict&#39;, &#39;dir&#39;, &#39;divmod&#39;, &#39;enumerate&#39;, &#39;eval&#39;, &#39;execfile&#39;, &#39;exit&#39;, &#39;file&#39;, &#39;filter&#39;, &#39;float&#39;, &#39;format&#39;, &#39;frozenset&#39;, &#39;getattr&#39;, &#39;globals&#39;, &#39;hasattr&#39;, &#39;hash&#39;, &#39;help&#39;, &#39;hex&#39;, &#39;id&#39;, &#39;input&#39;, &#39;int&#39;, &#39;intern&#39;, &#39;isinstance&#39;, &#39;issubclass&#39;, &#39;iter&#39;, &#39;len&#39;, &#39;license&#39;, &#39;list&#39;, &#39;locals&#39;, &#39;long&#39;, &#39;map&#39;, &#39;max&#39;, &#39;memoryview&#39;, &#39;min&#39;, &#39;next&#39;, &#39;object&#39;, &#39;oct&#39;, &#39;open&#39;, &#39;ord&#39;, &#39;pow&#39;, &#39;print&#39;, &#39;property&#39;, &#39;quit&#39;, &#39;range&#39;, &#39;raw_input&#39;, &#39;reduce&#39;, &#39;reload&#39;, &#39;repr&#39;, &#39;reversed&#39;, &#39;round&#39;, &#39;set&#39;, &#39;setattr&#39;, &#39;slice&#39;, &#39;sorted&#39;, &#39;staticmethod&#39;, &#39;str&#39;, &#39;sum&#39;, &#39;super&#39;, &#39;tuple&#39;, &#39;type&#39;, &#39;unichr&#39;, &#39;unicode&#39;, &#39;vars&#39;, &#39;xrange&#39;, &#39;zip&#39;]</code></pre>
 </section><section class="slide level2">
 
 <h3 id="异常的命名">异常的命名</h3>
+<ul>
+<li class="fragment"><p>因为异常是类, 所以应该遵从类的命名规范, 使用驼峰法</p></li>
+<li class="fragment"><p>一般异常类名后缀以 <code>Error</code> 结尾</p></li>
+</ul>
 </section><section class="slide level2">
 
 <h3 id="全局变量的命名">全局变量的命名</h3>
+<ul>
+<li class="fragment"><p>全局变量指的就是模块级别的变量</p></li>
+<li class="fragment"><p>全局变量的命名规范和函数一样</p></li>
+<li class="fragment"><p>如果模块被设计来通过 <code>import *</code> 暴露其中的名称, 则应该使用 <code>__all__</code> 机制, 或者使用下划线开头的名称</p></li>
+</ul>
 </section><section class="slide level2">
 
 <h3 id="函数的命名">函数的命名</h3>
+<ul>
+<li class="fragment"><p>函数名应该是小写</p></li>
+<li class="fragment"><p>单词之间使用下划线分隔以提高可读性</p></li>
+<li class="fragment"><p>为了向后兼容, 也可以使用 mixedCase 风格, 保持上下文的一致性</p></li>
+</ul>
 </section><section class="slide level2">
 
 <h3 id="函数和方法的参数命名">函数和方法的参数命名</h3>
+<ul>
+<li class="fragment"><p>参数名应该是小写</p></li>
+<li class="fragment"><p>单词之间使用下划线分隔以提高可读性</p></li>
+<li class="fragment"><p>实例方法的第一个参数名总是 <code>self</code></p></li>
+<li class="fragment"><p>类方法的第一个参数名总是 <code>cls</code></p></li>
+<li class="fragment"><p>如果参数名和Python关键字冲突, 一般的做法是加一个下划线做后缀(或者找个同义词)</p></li>
+</ul>
 </section><section class="slide level2">
 
 <h3 id="方法的命名和实例变量">方法的命名和实例变量</h3>
+<ul>
+<li class="fragment"><p>和函数的命名规范一致</p></li>
+<li class="fragment"><p>使用下划线前缀来标示 non-public</p></li>
+<li class="fragment"><p>如果要避免和子类发生命名冲突, 使用双下划线前缀</p></li>
+</ul>
 </section><section class="slide level2">
 
 <h3 id="常量的命名">常量的命名</h3>
+<ul>
+<li class="fragment"><p>常量的作用范围一般定义为模块级别</p></li>
+<li class="fragment"><p>使用全大写字母, 中间用下划线隔开, 如 <code>MAX_LENGTH</code></p></li>
+</ul>
+</section><section id="关于继承的设计" class="slide level2">
+<h1>关于继承的设计</h1>
+<ul>
+<li class="fragment"><p>想清楚类/实例的方法或变量是public还是non-public</p></li>
+<li class="fragment"><p>如果有疑惑, 选择non-public, 这样以后转为public也更容易</p></li>
+<li class="fragment"><p>non-public 不等同于其他语言的 <code>private</code>, 实际上Python中没有真正意义上的private</p></li>
+</ul>
 </section><section class="slide level2">
 
-<h3 id="关于继承的设计">关于继承的设计</h3>
+<h3 id="一些pythonic的建议">一些Pythonic的建议</h3>
+<ul>
+<li class="fragment"><p>Public 属性没有下划线前缀</p></li>
+<li class="fragment"><p>如果 public 属性名和关键字冲突, 使用下划线后缀</p></li>
+<li class="fragment"><p>使用property, 尽量保证函数式行为</p></li>
+<li class="fragment"><p>如果类被设计为基类, 但是不想其中的属性被继承, 使用双下划线前缀</p></li>
+</ul>
 </section><section id="外部和内部接口" class="slide level2">
 <h1>外部和内部接口</h1>
 </section></section>
-<section><section id="编码建议" class="titleslide slide level1"><h1>编码建议</h1></section></section>
+<section><section id="编码建议" class="titleslide slide level1"><h1>编码建议</h1></section><section id="编写与python实现无关的代码" class="slide level2">
+<h1>编写与Python实现无关的代码</h1>
+<ul>
+<li class="fragment"><p>Python有多种实现(PyPy, Jython, IronPython, Cython, Psyco等等)</p></li>
+<li class="fragment"><p>不要编写在某种特定实现下比较高效的代码</p>
+<p>例如: CPython实现中的字符串就地拼接(<code>a += b</code> 或 <code>a = a + b</code>)比较高效, 然而这种优化是不可靠的, 出于性能的考虑, 应该使用标准库的 <code>''.join()</code> 方法.</p></li>
+</ul>
+</section><section id="单体的比较" class="slide level2">
+<h1>单体的比较</h1>
+<ul>
+<li class="fragment"><p>单体(singletons), 如 <code>None</code> 的比较使用 <code>is</code> 和 <code>is not</code>, 而不是 <code>==</code></p></li>
+<li class="fragment"><p>在 <code>if</code> 语句中注意 <code>if x</code> 和 <code>if x is not None</code> 的区别.</p></li>
+</ul>
+<div class="fragment">
+<pre class="python"><code>x = None
+
+def count(x):
+    if x:
+        return len(x)
+    else:
+        return 0
+
+def init(x):
+    if x is None:
+        x = []</code></pre>
+</div>
+</section><section class="slide level2">
+
+<p>使用 <code>is not</code>, 而不是 <code>not ... is</code></p>
+<pre class="python"><code># Yes:
+if foo is not None:
+
+# No:
+if not foo is None:</code></pre>
+</section><section id="rich-comparisons" class="slide level2">
+<h1>Rich Comparisons</h1>
+<ul>
+<li class="fragment"><p>要实现丰富比较, 最好一次性实现6种操作 (<code>__eq__ , __ne__ , __lt__ , __le__ , __gt__ , __ge__</code>)</p></li>
+<li class="fragment"><p><code>functools.total_ordering()</code> 可以帮助简化实现</p></li>
+<li class="fragment"><p>Python假定操作是自反的, 例如, 解释器有可能会将 <code>x &lt; y</code> 调换为 <code>x &gt; y</code></p></li>
+</ul>
+</section><section id="lambda赋值" class="slide level2">
+<h1>lambda赋值</h1>
+<ul>
+<li class="fragment"><p>避免使用 <code>lamda</code> 语句赋值给函数对象</p></li>
+<li class="fragment"><p><code>lamda</code> 语句相对于 <code>def</code> 语句的优势是可以嵌入在一个长表达式中, 使用了赋值实际上就消除了这一点</p></li>
+</ul>
+<div class="fragment">
+<pre class="python"><code># Yes:
+def f(x): return 2*x
+
+# No:
+f = lambda x: 2*x</code></pre>
+</div>
+</section><section id="派生异常类" class="slide level2">
+<h1>派生异常类</h1>
+<ul>
+<li class="fragment"><p>定义异常派生类时, 选择 <code>Exception</code> 作为基类, 而不是 <code>BaseException</code></p></li>
+<li class="fragment"><p>Aim to answer the question &quot;What went wrong?&quot; programmatically, rather than only stating that &quot;A problem occurred&quot;</p></li>
+<li class="fragment"><p>遵从类的命名规范, 一般会带上Error后缀, 当然有些异常不算是错误的话, 也可以省略</p></li>
+</ul>
+</section><section id="异常链" class="slide level2">
+<h1>异常链</h1>
+<ul>
+<li class="fragment"><p>Python3中需要使用 <code>raise X from Y</code> 来显式的表明异常替换, 保留完整的traceback</p></li>
+<li class="fragment"><p>如果确实要替换异常, 使用 <code>raise X</code> in Python2, <code>raise X from None</code> in Python 3.3+</p></li>
+<li class="fragment"><p>如果要替换抛出的异常, 一般要确保把前一个异常的详细信息保留下来</p></li>
+</ul>
+</section><section id="抛异常" class="slide level2">
+<h1>抛异常</h1>
+<ul>
+<li class="fragment"><p>Python2中, 使用 <code>raise ValueError('message')</code>, 而不是 <code>raise ValueError, 'message'</code></p></li>
+<li class="fragment"><p>后者的语法在Python3中已经淘汰</p></li>
+</ul>
+</section><section id="捕获异常" class="slide level2">
+<h1>捕获异常</h1>
+<ul>
+<li class="fragment"><p>当捕获异常时, 尽量指明特定的异常类型, 而不是空的 <code>except:</code> 语句</p></li>
+<li class="fragment"><p>空 <code>except:</code> 会同时捕获 <code>SystemExit</code> 和 <code>KeyboardInterrupt</code>, 使得程序难以用 Ctrl-C停止, 同时掩盖其它异常</p></li>
+<li class="fragment"><p>如果想捕获所有异常, 使用 <code>except Exception:</code></p></li>
+<li class="fragment"><p><code>except:</code> 等同于 <code>except BaseException:</code></p></li>
+</ul>
+<pre class="python"><code>try:
+    import platform_specific_module
+except ImportError:
+    platform_specific_module = None</code></pre>
+</section><section class="slide level2">
+
+<ul>
+<li class="fragment">需要绑定捕获到的异常时, 使用如下的语法:</li>
+</ul>
+<pre class="python"><code>try:
+    process_data()
+except Exception as exc:
+    raise DataProcessingFailedError(str(exc))</code></pre>
+<ul>
+<li class="fragment">下面Python2中老式的逗号分隔的语法在Python3中已经废弃</li>
+</ul>
+<pre class="python"><code>try:
+    process_data()
+except Exception, exc:
+    raise DataProcessingFailedError(str(exc))</code></pre>
+</section><section class="slide level2">
+
+<p>When catching operating system errors, prefer the explicit exception hierarchy introduced in Python 3.3 over introspection of <code>errno</code> values.</p>
+</section><section class="slide level2">
+
+<p>Additionally, for all try/except clauses, limit the try clause to the absolute minimum amount of code necessary. Again, this avoids masking bugs.</p>
+<pre class="python"><code># Yes:
+try:
+    value = collection[key]
+except KeyError:
+    return key_not_found(key)
+else:
+    return handle_value(value)
+
+# No:
+try:
+    # Too broad!
+    return handle_value(collection[key])
+except KeyError:
+    # Will also catch KeyError raised by handle_value()
+    return key_not_found(key)</code></pre>
+</section><section class="slide level2">
+
+</section></section>
     </div>
   </div>
 
