@@ -38,17 +38,62 @@
   <h3 class="date">2016-06-25</h3>
 </section>
 
-<section><section id="概述" class="titleslide slide level1"><h1>概述</h1></section><section id="什么是pep8" class="slide level2">
+<section><section id="前言" class="titleslide slide level1"><h1>前言</h1></section><section id="python之禅" class="slide level2">
+<h1>Python之禅</h1>
+<pre><code>&gt;&gt;&gt; import this
+The Zen of Python, by Tim Peters
+
+Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+Flat is better than nested.
+Sparse is better than dense.
+Readability counts.
+Special cases aren&#39;t special enough to break the rules.
+Although practicality beats purity.
+Errors should never pass silently.
+Unless explicitly silenced.
+In the face of ambiguity, refuse the temptation to guess.
+There should be one-- and preferably only one --obvious way to do it.
+Although that way may not be obvious at first unless you&#39;re Dutch.
+Now is better than never.
+Although never is often better than *right* now.
+If the implementation is hard to explain, it&#39;s a bad idea.
+If the implementation is easy to explain, it may be a good idea.
+Namespaces are one honking great idea -- let&#39;s do more of those!</code></pre>
+<div class="fragment">
+<p><a href="https://www.python.org/dev/peps/pep-0020/">PEP20</a> = The Zen of Python</p>
+</div>
+</section><section id="大括号" class="slide level2">
+<h1>大括号？</h1>
+<h3 id="没门">没门！</h3>
+<pre class="python"><code>&gt;&gt;&gt; from __future__ import braces
+SyntaxError: not a chance (&lt;input&gt;, line 1)</code></pre>
+</section></section>
+<section><section id="概述" class="titleslide slide level1"><h1>概述</h1></section><section id="为何要代码规范" class="slide level2">
+<h1>为何要代码规范</h1>
+<blockquote>
+<p><strong>Programs must be written for people to read, and only incidentally for machines to execute.</strong> <strong>程序是写来给人读的,只是顺带让机器执行。</strong> --- Abelson &amp; Sussman, <a href="https://book.douban.com/subject/1148282/">计算机程序的构造和解释</a></p>
+</blockquote>
+</section><section id="什么是pep8" class="slide level2">
 <h1>什么是PEP8</h1>
 <p>PEP = Python Enhancement Proposal</p>
-<p>PEP8 = Style Guide for Python Code</p>
-</section><section id="为什么要代码规范" class="slide level2">
-<h1>为什么要代码规范</h1>
-<p>Guido:</p>
-<p><strong>Code is read much more often than it is written.</strong></p>
+<p><a href="https://www.python.org/dev/peps/pep-0008/">PEP8</a> = Style Guide for Python Code</p>
 </section><section class="slide level2">
 
-<h3 id="什么时候不必遵守规范">什么时候不必遵守规范</h3>
+<h3 id="规范的意义">规范的意义</h3>
+<ul>
+<li class="fragment"><p>规范的意义在于保持一致性(consistency).</p></li>
+<li class="fragment"><p>保持一致的风格是重要的.</p></li>
+<li class="fragment"><p>在一个项目中保持一致的风格则更重要.</p></li>
+<li class="fragment"><p>在一个模块或函数中保持一致性是最重要的.</p></li>
+</ul>
+</section><section class="slide level2">
+
+<h3 id="莫要愚蠢的坚持">莫要愚蠢的坚持</h3>
+<p>一致性虽然重要, 但最最重要的是: <strong>知道何时会不一致</strong></p>
+<p>有时候会觉得风格指导难以应用, 当有疑惑时, 多思考, 多参考其它例子, 做出自己最好的判断!</p>
 <ul>
 <li class="fragment">使得代码可读性变差</li>
 <li class="fragment">破坏当前代码风格的连续性(比如历史原因)</li>
@@ -57,10 +102,11 @@
 </section></section>
 <section><section id="代码布局" class="titleslide slide level1"><h1>代码布局</h1></section><section id="缩进" class="slide level2">
 <h1>缩进</h1>
+<h3 id="空格-or-tab">空格 or Tab?</h3>
 <ul>
 <li class="fragment">使用4个空格作为一级缩进</li>
-<li class="fragment">不要混用Tab和空格</li>
-<li class="fragment">设置编辑器将Tab转为空格</li>
+<li class="fragment">_永远_不要混用Tab和空格(事实上混用了会无法执行)</li>
+<li class="fragment">设置编辑器自动将Tab转为空格</li>
 </ul>
 </section><section class="slide level2">
 
@@ -404,10 +450,29 @@ if foo == &#39;blah&#39;: one(); two(); three()</code></pre>
 <p>有时候也有必要</p>
 <pre class="python"><code>x = x + 1                 # Compensate for border</code></pre>
 </div>
+</section><section id="todo注释" class="slide level2">
+<h1>TODO注释</h1>
+<ul>
+<li class="fragment">在注释的开头增加 <code>TODO</code> 字样, 用来解释此处代码将来要做什么</li>
+<li class="fragment">TODO后面可以在括号中加上自己名字, 用来提示其它人</li>
+<li class="fragment">PyCharm编辑器默认会将 <code>TODO</code> 注释中TODO字样高亮显示, 并自动查找项目中所有的TODO List</li>
+<li class="fragment">PyCharm 还支持其它的字样, 如 <code>FixMe</code>, 还能自定义设置(<code>Settings | Editor | TODO</code>)</li>
+</ul>
+<pre class="python"><code># TODO(Sdw) Change this to use relations.</code></pre>
 </section><section id="文档字符串" class="slide level2">
 <h1>文档字符串</h1>
 <p>文档字符串(docstrings)经常充当解释代码意图的作用.</p>
 <p>如何写好文档字符串, 有专门的 <a href="https://www.python.org/dev/peps/pep-0257">PEP 257</a>介绍.</p>
+</section><section class="slide level2">
+
+<h3 id="docstrings-comments">Docstrings &amp; Comments</h3>
+<ul>
+<li class="fragment">Docstrings = How to use code</li>
+<li class="fragment"><p>Comments = Why (rationale) &amp; how code works</p></li>
+<li class="fragment">文档字符串解释 <em>如何</em> 使用代码, 面向的读者是代码的 <em>用户</em>.</li>
+<li class="fragment">注释主要用来解释代码 <em>为何</em> 这样写, 面向的读者是代码的 <em>维护者</em></li>
+<li class="fragment"><p>这两类人中都包括了代码的作者, 也就是 <em>你</em>.</p></li>
+</ul>
 </section><section class="slide level2">
 
 <h3 id="如何写文档字符串">如何写文档字符串</h3>
@@ -435,6 +500,14 @@ Optional plotz says to frobnicate the bizbaz first.
 <h1>最重要的原则</h1>
 <p>需要以public API暴露给用户的命名需要遵从:</p>
 <p><strong>反映用途, 而不是实现.</strong></p>
+</section><section id="命名约定" class="slide level2">
+<h1>命名约定</h1>
+<ul>
+<li class="fragment">所谓&quot;内部(Internal)&quot;表示仅模块内可用, 或者, 在类内是保护或私有的.</li>
+<li class="fragment">用单下划线(<code>_</code>)开头表示模块变量或函数是protected的(使用<code>import *</code>时不会包含).</li>
+<li class="fragment">用双下划线(<code>__</code>)开头的实例变量或方法表示类内私有.</li>
+<li class="fragment">将相关的类和顶级函数放在同一个模块里. 不像Java, 没必要限制一个类一个模块.</li>
+</ul>
 </section><section id="命名风格" class="slide level2">
 <h1>命名风格</h1>
 <p>存在多种不同的命名风格.</p>
@@ -476,10 +549,12 @@ Optional plotz says to frobnicate the bizbaz first.
 <h1>命名规范</h1>
 </section><section class="slide level2">
 
-<h3 id="避免用到的名字">避免用到的名字</h3>
-<p>单字符变量应该避免使用: <code>l O I</code></p>
+<h3 id="应该避免的名称">应该避免的名称</h3>
 <ul>
-<li class="fragment">选择一个合适的字体, 可以比较清楚的区分这些字符</li>
+<li class="fragment"><p>避免使用单字符名称, 除了计数器和迭代器</p></li>
+<li class="fragment"><p>单字符变量应该避免使用: <code>l O I</code> (选择一个合适的字体, 可以比较清楚的区分这些字符)</p></li>
+<li class="fragment"><p>包/模块名称中使用连字符 (<code>-</code>)</p></li>
+<li class="fragment"><p>双下划线开头并结尾的名称(Python保留)</p></li>
 </ul>
 </section><section class="slide level2">
 
@@ -675,7 +750,9 @@ except Exception, exc:
 <p>When catching operating system errors, prefer the explicit exception hierarchy introduced in Python 3.3 over introspection of <code>errno</code> values.</p>
 </section><section class="slide level2">
 
-<p>Additionally, for all try/except clauses, limit the try clause to the absolute minimum amount of code necessary. Again, this avoids masking bugs.</p>
+<ul>
+<li class="fragment">对 <code>try/except</code> 语句, 限制 <code>try</code> 子句覆盖的代码必要范围, 有助于避免隐藏bug.</li>
+</ul>
 <pre class="python"><code># Yes:
 try:
     value = collection[key]
@@ -691,8 +768,321 @@ try:
 except KeyError:
     # Will also catch KeyError raised by handle_value()
     return key_not_found(key)</code></pre>
+</section><section id="return语句" class="slide level2">
+<h1>return语句</h1>
+<ul>
+<li class="fragment">保证return的一致性, 要么一个函数中的所有return都有表达式返回, 要么都没有</li>
+<li class="fragment">如果任何一个return有表达式返回, 其它没有值返回的return语句也应该显式 <code>return None</code></li>
+<li class="fragment">函数的结尾应该有个显式的return</li>
+</ul>
 </section><section class="slide level2">
 
+<p>Yes</p>
+<pre class="python"><code>def foo(x):
+    if x &gt;= 0:
+        return math.sqrt(x)
+    else:
+        return None
+
+def bar(x):
+    if x &lt; 0:
+        return None
+    return math.sqrt(x)</code></pre>
+<p>No</p>
+<pre class="python"><code>def foo(x):
+    if x &gt;= 0:
+        return math.sqrt(x)
+
+def bar(x):
+    if x &lt; 0:
+        return
+    return math.sqrt(x)</code></pre>
+</section><section id="字符串" class="slide level2">
+<h1>字符串</h1>
+<ul>
+<li class="fragment"><p>优先使用字符串方法(methods)代替字符串模块, 字符串方法总是很快, 而且和unicode字符串共用同样的API</p></li>
+<li class="fragment"><p>检查前缀和后缀时避免使用切片的方式, 而是使用 <code>startswith()</code> 和 <code>endswith()</code>, 表达更清晰而且不容易出错</p></li>
+</ul>
+<pre class="python"><code>Yes: if foo.startswith(&#39;bar&#39;):
+No:  if foo[:3] == &#39;bar&#39;:</code></pre>
+</section><section class="slide level2">
+
+<ul>
+<li class="fragment">格式化字符串使用 <code>%</code> 操作符或者 <code>format</code> 方法</li>
+<li class="fragment">如果参数都是字符串, 比较简单的情况下, 则使用 <code>+</code> 更清楚</li>
+</ul>
+<div class="fragment">
+<pre class="python"><code># Yes: 
+x = a + b
+x = &#39;%s, %s!&#39; % (imperative, expletive)
+x = &#39;{}, {}!&#39;.format(imperative, expletive)
+x = &#39;name: %s; score: %d&#39; % (name, n)
+x = &#39;name: {}; score: {}&#39;.format(name, n)
+
+# No: 
+x = &#39;%s%s&#39; % (a, b)  # use + in this case
+x = &#39;{}{}&#39;.format(a, b)  # use + in this case
+x = imperative + &#39;, &#39; + expletive + &#39;!&#39;
+x = &#39;name: &#39; + name + &#39;; score: &#39; + str(n)</code></pre>
+</div>
+</section><section class="slide level2">
+
+<ul>
+<li class="fragment">避免在循环中使用 <code>+</code> 和 <code>+=</code> 累加字符串</li>
+<li class="fragment">使用列表保存子串, 最后使用 <code>.join</code> 连接</li>
+</ul>
+<div class="fragment">
+<pre class="python"><code># Yes: 
+items = [&#39;&lt;table&gt;&#39;]
+for last_name, first_name in employee_list:
+    items.append(&#39;&lt;tr&gt;&lt;td&gt;%s, %s&lt;/td&gt;&lt;/tr&gt;&#39; % (last_name, first_name))
+items.append(&#39;&lt;/table&gt;&#39;)
+employee_table = &#39;&#39;.join(items)
+
+# No: 
+employee_table = &#39;&lt;table&gt;&#39;
+for last_name, first_name in employee_list:
+    employee_table += &#39;&lt;tr&gt;&lt;td&gt;%s, %s&lt;/td&gt;&lt;/tr&gt;&#39; % (last_name, first_name)
+employee_table += &#39;&lt;/table&gt;&#39;</code></pre>
+</div>
+</section><section class="slide level2">
+
+<ul>
+<li class="fragment">在同一个文件中, 保持字符串引号的一致性, 即要么都是单引号,要么都是双引号; 当然字符串内可以使用另一种引号</li>
+<li class="fragment">优先使用三重双引号(<code>&quot;&quot;&quot;</code>)而不是三重单引号(<code>'''</code>)</li>
+<li class="fragment">三重引号一般就用于docstrings, 普通情况下多行字符串应该使用隐式行连接</li>
+</ul>
+<div class="fragment">
+<pre class="python"><code># No:
+def log():
+    print &quot;&quot;&quot;This is pretty ugly.
+Don&#39;t do this.
+&quot;&quot;&quot;
+
+# Yes:
+def report():
+    print (&quot;This is much nicer.\n&quot;
+           &quot;Do it this way.\n&quot;)</code></pre>
+</div>
+</section><section id="类型判断" class="slide level2">
+<h1>类型判断</h1>
+<ul>
+<li class="fragment">总是使用 <code>isinstance()</code> 方法而不是直接比较对象的类型</li>
+</ul>
+<div class="fragment">
+<pre class="python"><code># Yes: 
+if isinstance(obj, int):
+
+# No:  
+if type(obj) is type(1):</code></pre>
+<ul>
+<li class="fragment">当判断一个对象是否字符串类型时, 记住它还有可能是unicode!, Python2中 <code>str</code> 和 <code>unicode</code> 有相同的基类 <code>basestring</code>, 所以:</li>
+<li class="fragment">Python 3中, 只有 <code>str</code> 类型</li>
+</ul>
+<pre class="python"><code># for python 2.x
+if isinstance(obj, basestring):</code></pre>
+</div>
+</section><section id="bool判断" class="slide level2">
+<h1>bool判断</h1>
+<ul>
+<li class="fragment">对于序列对象(如字符串,列表,元组), 记住空序列的结果就是 <code>False</code></li>
+</ul>
+<pre class="python"><code># Yes: 
+if not seq:
+if seq:
+
+# No: 
+if len(seq):
+if not len(seq):</code></pre>
+<ul>
+<li class="fragment">不要将对象和 <code>Ture</code> 或 <code>False</code> 使用 <code>==</code> 比较</li>
+</ul>
+<pre class="python"><code>Yes:   if greeting:
+No:    if greeting == True:
+Worse: if greeting is True:</code></pre>
+</section></section>
+<section><section id="惯用法" class="titleslide slide level1"><h1>惯用法</h1></section><section id="be-pythonic" class="slide level2">
+<h1>Be Pythonic</h1>
+<p>下面主要介绍Python语言中的惯用法.</p>
+<p>多多应用这些惯用写法, 就能把Python代码写的如人们常说的那样更加Pythonic.</p>
+</section><section class="slide level2">
+
+<h3 id="交换变量的值">交换变量的值</h3>
+<pre class="python"><code>temp = a
+a = b
+b = temp</code></pre>
+<pre class="python"><code>a, b = b, a</code></pre>
+</section><section class="slide level2">
+
+<p>How it works?</p>
+<ul>
+<li class="fragment">逗号是元组的构造语法</li>
+<li class="fragment">右边创建一个元组(打包 packing)</li>
+<li class="fragment">左边是目标元组(解包 unpacking)</li>
+</ul>
+<div class="fragment">
+<p>函数有多个返回值时也用到这种语法</p>
+<pre class="python"><code>def person():
+    return &quot;bob&quot;, 18
+
+name, age = person()</code></pre>
+</div>
+</section><section class="slide level2">
+
+<h3 id="链式比较">链式比较</h3>
+<pre class="python"><code>if b &gt;= 1 and b &lt;= a and a &lt; 10:
+    pass</code></pre>
+<pre class="python"><code>if 1 &lt;= b &lt;= a &lt; 10:
+    pass</code></pre>
+</section><section class="slide level2">
+
+<h3 id="使用in">使用in</h3>
+<p>以下两种写法有何区别:</p>
+<pre class="python"><code>for key in d:
+    print key</code></pre>
+<pre class="python"><code>for key in d.keys():
+    print key</code></pre>
+</section><section class="slide level2">
+
+<p>判断字典中是否包含key:</p>
+<pre class="python"><code># do this:
+if key in d:
+    print d[key]</code></pre>
+<pre class="python"><code># not this:
+if d.has_key(key):
+    print d[key]</code></pre>
+</section><section class="slide level2">
+
+<h3 id="获取字典值">获取字典值</h3>
+<p>使用 <code>dict.get</code> 来尝试获取字典值并指定默认值</p>
+<pre class="python"><code>d = {&#39;age&#39;: 23, &#39;workage&#39;: 1, &#39;name&#39;: &#39;Tim&#39;}
+if &#39;workage&#39; in d:
+    d[&#39;workage&#39;] += 1
+else:
+    d[&#39;workage&#39;] = 1</code></pre>
+<pre class="python"><code>d = {&#39;name&#39;: &#39;Tim&#39;, &#39;age&#39;: 23}  
+d[&#39;workage&#39;] = d.get(&#39;workage&#39;, 0) + 1</code></pre>
+</section><section class="slide level2">
+
+<h3 id="字典设置缺省值">字典设置缺省值</h3>
+<p>使用 <code>dict.setdefault</code> 高效的为字典设置缺省值.</p>
+<p>例如: 假设存在一组数据data, 每一条数据前面是某个项目的名称, 后面是该项目的值</p>
+<pre class="python"><code>data = [(&#39;A&#39;, 3), (&#39;B&#39;, 5), (&#39;B&#39;, 8), (&#39;A&#39;, 20), (&#39;C&#39;, 10)]</code></pre>
+<ol type="1">
+<li class="fragment">将每一项的所有值汇总为一个列表</li>
+</ol>
+<pre class="python"><code>results = {}
+for name, count in data:
+    results.setdefault(name, []).append(count)</code></pre>
+<ol start="2" type="1">
+<li class="fragment">将每一项的所有值求和</li>
+</ol>
+<pre class="python"><code>results = {}
+for name, count in data:
+    results.setdefault(name, 0)  
+    results[name] += count</code></pre>
+</section><section class="slide level2">
+
+<h3 id="列表解析">列表解析</h3>
+<p>基于一个列表(或其它序列)生成新的列表时, 尽量使用列表解析.</p>
+<pre class="python"><code>new_list = []
+for item in a_list:
+    if condition(item):
+        new_list.append(fn(item))</code></pre>
+<pre class="python"><code>new_list = [fn(item) for item in a_list if condition(item)]</code></pre>
+</section><section class="slide level2">
+
+<h3 id="生成器表达式">生成器表达式</h3>
+<p>先看一个例子: 计算 1-100 的平方和.</p>
+<div class="fragment">
+<p>普通循环</p>
+<pre class="python"><code>total = 0
+for num in range(1, 101):
+    total += num * num</code></pre>
+<p>列表解析</p>
+<pre class="python"><code>total = sum([num * num for num in range(1, 101)])</code></pre>
+<p>生成器表达式</p>
+<pre class="python"><code>total = sum(num * num for num in xrange(1, 101))</code></pre>
+</div>
+</section><section class="slide level2">
+
+<h3 id="for...else...">for...else...</h3>
+<p><code>for</code> 循环可以使用 <code>else</code> 子句来处理没有从for循环中断的情况</p>
+<pre class="python"><code>find = False
+for x in xrange(1,5):
+    if x == 5:
+        find = True
+        print &#39;find 5&#39;
+        break
+if not find:
+    print &#39;can not find 5!&#39;</code></pre>
+<pre class="python"><code>for x in xrange(1,5):
+    if x == 5:
+        print &#39;find 5&#39;
+        break
+else:
+    print &#39;can not find 5!&#39;</code></pre>
+</section><section class="slide level2">
+
+<h3 id="三元操作符">三元操作符</h3>
+<p>有C语言经验的可能会想念 <code>A ? B : C</code> 这种三元操作符</p>
+<pre class="c"><code>int a = x ? 1 : 0 </code></pre>
+<pre class="python"><code>if x &gt; 2:
+    a = 1
+else:
+    a = 0</code></pre>
+<pre class="python"><code>a = 1 if x &gt; 2 else 0</code></pre>
+</section><section class="slide level2">
+
+<h3 id="枚举">枚举</h3>
+<p>使用enumerate可以一次性将索引和值取出，避免使用索引来取值</p>
+<pre class="python"><code>array = [1, 2, 3, 4, 5]
+for i in xrange(len(array)):
+    print i, array[i]</code></pre>
+<pre class="python"><code>array = [1, 2, 3, 4, 5]
+for i, e in enumerate(array,0):
+    print i, e</code></pre>
+</section><section class="slide level2">
+
+<h3 id="模块or脚本">模块or脚本</h3>
+<p>一个 <code>.py</code> 文件既可以作为Python模块, 也可以当做是一个脚本来执行.</p>
+<p>一般情况下是在文件的最后加上:</p>
+<pre class="python"><code>if __name__ == &#39;__main__&#39;:
+    # script code here</code></pre>
+<ul>
+<li class="fragment">其中使用特殊变量 <code>__name__</code>,</li>
+<li class="fragment">如果该文件是被import, 则 <code>__name__</code> 值为该模块名称(即不带<code>.py</code>的文件名)</li>
+<li class="fragment">如果该文件被当做脚本执行, 则 <code>__name__</code> 值为 <code>__main__</code>, 所以 <code>if</code> 语句下面的内容会被执行</li>
+</ul>
+</section><section class="slide level2">
+
+</section></section>
+<section><section id="作业" class="titleslide slide level1"><h1>作业</h1></section><section id="作业1" class="slide level2">
+<h1>作业1</h1>
+<p>根据PEP8中的代码规范检查自己编写的python代码, 根据情况修改其中不符合的地方.</p>
+<p>自测方法是在PyCharm中打开代码, IDE自动检测.</p>
+</section><section id="作业2" class="slide level2">
+<h1>作业2</h1>
+<p>计算一个数是否&quot;happy&quot;.</p>
+<p>Happy数的定义如下:</p>
+<ol type="1">
+<li>首先给定一个正整数 number</li>
+<li>对该正整数的每一位求平方和, 得到新的正整数</li>
+<li>重复步骤2, 直到最终结果为1, 或者陷入无限循环</li>
+<li>如果最终的结果能达到1, 表示 number 是happy的</li>
+</ol>
+<p>例如: 19 是happy数, 因为:</p>
+<pre><code>1*1 + 9*9 = 82
+8*8 + 2*2 = 68
+6*6 + 8*8 = 100
+1*1 + 0*0 + 0*0 = 1</code></pre>
+</section><section class="slide level2">
+
+<h3 id="提示">提示</h3>
+<ol type="1">
+<li class="fragment">需要记录已经出现过的数字</li>
+</ol>
+<p>问题来源: https://leetcode.com/problems/happy-number/</p>
 </section></section>
     </div>
   </div>
